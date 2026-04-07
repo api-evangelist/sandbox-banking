@@ -8,10 +8,10 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Banking
-  - Fintech
   - API Integration
+  - Banking
   - Financial Services
+  - Fintech
 url: >-
   https://raw.githubusercontent.com/api-evangelist/sandbox-banking/refs/heads/main/apis.yml
 created: '2024-12-25'
