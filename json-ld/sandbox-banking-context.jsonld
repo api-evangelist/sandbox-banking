@@ -1,0 +1,59 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+    "glyue": "https://glyue.sandboxbanking.com/vocabulary#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Integration": "schema:SoftwareApplication",
+    "ServiceRequest": "schema:Action",
+    "FieldMapping": "schema:PropertyValue",
+    "ValidationRule": "schema:DefinedTerm",
+    "RunHistory": "schema:Event",
+    "BankingAdapter": "schema:SoftwareApplication",
+
+    "id": "@id",
+    "name": "schema:name",
+    "description": "schema:description",
+    "status": "schema:status",
+    "version": "schema:version",
+    "createdAt": "schema:dateCreated",
+    "updatedAt": "schema:dateModified",
+
+    "integrationType": "glyue:integrationType",
+    "sourceSystem": "schema:provider",
+    "targetSystem": "schema:recipient",
+    "serviceRequests": "schema:hasPart",
+    "fieldMappings": "schema:propertyValue",
+    "validationRules": "glyue:validationRules",
+    "auditEnabled": "glyue:auditEnabled",
+
+    "adapter": "glyue:adapter",
+    "operation": "schema:action",
+    "callForEach": "glyue:callForEach",
+    "sourceField": "schema:name",
+    "targetField": "schema:value",
+    "transform": "glyue:transform",
+
+    "BankAccount": "fibo:FinancialAccount",
+    "Loan": "fibo:Loan",
+    "Transaction": "fibo:Payment",
+    "Customer": "schema:Person",
+    "FinancialInstitution": "schema:FinancialService",
+
+    "accountNumber": "fibo:accountNumber",
+    "routingNumber": "fibo:routingNumber",
+    "loanAmount": "fibo:principalAmount",
+    "interestRate": "fibo:interestRate",
+    "termMonths": "glyue:termMonths",
+    "loanType": "fibo:loanType",
+
+    "runId": "glyue:runId",
+    "runStatus": "glyue:runStatus",
+    "startTime": "schema:startTime",
+    "endTime": "schema:endTime",
+    "requestBody": "glyue:requestBody",
+    "responseBody": "glyue:responseBody"
+  }
+}

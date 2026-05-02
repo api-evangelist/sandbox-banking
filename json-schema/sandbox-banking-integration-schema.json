@@ -1,0 +1,142 @@
+{
+  "$id": "sandbox-banking-integration-schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sandbox Banking Integration",
+  "description": "Schema for a Sandbox Banking (Glyue) integration definition. An integration is a wrapper for composable logic that connects external banking systems through service requests, field mappings, value mappings, and validation rules.",
+  "type": "object",
+  "required": ["name", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the integration."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the integration (e.g., 'Loan Booking to Fiserv Spectrum')."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what this integration does and which systems it connects."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the integration.",
+      "enum": ["active", "inactive", "draft", "testing", "deprecated"]
+    },
+    "integrationType": {
+      "type": "string",
+      "description": "Type of integration pattern.",
+      "enum": ["web_service_api", "batch_etl", "file_transfer", "event_pubsub", "webhook"]
+    },
+    "sourceSystem": {
+      "type": "object",
+      "description": "The system that sends data into this integration.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Source system name (e.g., nCino, Salesforce CRM, Client Portal)."
+        },
+        "adapterType": {
+          "type": "string",
+          "description": "Adapter type used to connect to the source system."
+        }
+      }
+    },
+    "targetSystem": {
+      "type": "object",
+      "description": "The system that receives data from this integration.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Target system name (e.g., Fiserv Signature, Jack Henry Symitar, FIS Modern Banking)."
+        },
+        "adapterType": {
+          "type": "string",
+          "description": "Adapter type used to connect to the target system."
+        }
+      }
+    },
+    "serviceRequests": {
+      "type": "array",
+      "description": "Ordered list of service request operations that make up this integration.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Service request name."
+          },
+          "adapter": {
+            "type": "string",
+            "description": "Adapter used for this service request."
+          },
+          "operation": {
+            "type": "string",
+            "description": "Operation being performed (e.g., createLoan, getAccount, postTransaction)."
+          },
+          "callForEach": {
+            "type": "boolean",
+            "description": "Whether this service request iterates over a list of inputs."
+          }
+        }
+      }
+    },
+    "fieldMappings": {
+      "type": "array",
+      "description": "Field mapping definitions that transform data between source and target formats.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourceField": {
+            "type": "string",
+            "description": "Source field path or expression."
+          },
+          "targetField": {
+            "type": "string",
+            "description": "Target field path."
+          },
+          "transform": {
+            "type": "string",
+            "description": "Optional transformation formula or function."
+          }
+        }
+      }
+    },
+    "validationRules": {
+      "type": "array",
+      "description": "Validation rules that enforce input/response compliance.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string",
+            "description": "Boolean expression that must be true for the integration to proceed."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Error message returned if validation fails."
+          }
+        }
+      }
+    },
+    "auditEnabled": {
+      "type": "boolean",
+      "description": "Whether run history audit logging is enabled for this integration.",
+      "default": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the integration was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the integration was last modified."
+    }
+  },
+  "additionalProperties": true
+}

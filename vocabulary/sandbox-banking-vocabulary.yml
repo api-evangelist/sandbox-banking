@@ -1,0 +1,201 @@
+name: Sandbox Banking Vocabulary
+description: >-
+  Vocabulary and taxonomy for Sandbox Banking (now nCino Integration Gateway),
+  an iPaaS platform purpose-built for financial institutions. Documents key
+  concepts in banking system integration, core connectivity, fintech middleware,
+  and regulatory compliance for banks and credit unions.
+version: '1.0'
+created: '2026-05-02'
+modified: '2026-05-02'
+url: https://glyue.docs.sandboxbanking.com/
+
+terms:
+  - term: Glyue
+    definition: >-
+      The core integration framework underlying the Sandbox Banking / nCino Integration
+      Gateway platform. Provides the low-code workflow engine, adapter framework,
+      Python extensibility, field mapping UI, audit logging, and API exposure layer.
+    tags:
+      - Platform
+      - iPaaS
+
+  - term: Integration
+    definition: >-
+      A Glyue integration is a named, versioned workflow that orchestrates data
+      exchange between two or more banking systems. Wraps composable logic including
+      service requests, field mappings, validation rules, and hooks.
+    tags:
+      - Core Concept
+      - Workflow
+
+  - term: Service Request
+    definition: >-
+      The fundamental building block of a Glyue integration. A service request
+      executes one operation against an external system via an adapter. Multiple
+      service requests can be chained sequentially in an integration.
+    tags:
+      - Core Concept
+      - Operation
+
+  - term: Adapter
+    definition: >-
+      A Glyue connector that abstracts the API or protocol of a specific banking
+      system (e.g., Fiserv Signature, Jack Henry Symitar, FIS Modern Banking Platform,
+      Salesforce, nCino). Pre-built adapters eliminate custom integration code.
+    tags:
+      - Connectivity
+      - Core Concept
+
+  - term: Field Mapping
+    definition: >-
+      A declarative definition in Glyue that maps source system fields to target
+      system fields, applying transformations using Excel-like formulas or Python
+      expressions. Includes support for iterating over repeating structures via
+      include_for_each.
+    tags:
+      - Data Transformation
+      - Mapping
+
+  - term: Value Mapping
+    definition: >-
+      A lookup table in Glyue that translates discrete values between systems
+      (e.g., loan type codes "01" → "COMMERCIAL" → "C"). Organized into Value
+      Mapping Sets that can be reused across integrations.
+    tags:
+      - Data Transformation
+      - Lookup
+
+  - term: Validation Rule
+    definition: >-
+      A business rule in Glyue that validates input or response data. Can abort
+      the integration and return an error message if the condition is not met.
+      Supports apply_to_each iteration for list validation.
+    tags:
+      - Data Quality
+      - Governance
+
+  - term: Run History
+    definition: >-
+      The immutable audit log of every integration execution in Glyue. Captures
+      timestamps, inputs, outputs, service request results, and error states for
+      every run. Used for compliance auditing and debugging.
+    tags:
+      - Audit
+      - Compliance
+      - Governance
+
+  - term: Hook
+    definition: >-
+      A lifecycle callback point in a Glyue integration. Available hooks include
+      before, success, failure, and finally. Used to mutate input/output, add
+      logging, trigger notifications, or handle exceptions.
+    tags:
+      - Core Concept
+      - Extensibility
+
+  - term: Core Banking
+    definition: >-
+      The fundamental software systems that manage a bank's primary financial
+      records, including deposits, loans, accounts payable/receivable, and general
+      ledger. Major cores include Fiserv Signature/Precision, Jack Henry Symitar/SilverLake,
+      FIS Modern Banking Platform, and Temenos.
+    tags:
+      - Banking
+      - Systems
+
+  - term: iPaaS
+    definition: >-
+      Integration Platform as a Service. A cloud-based integration framework that
+      enables connecting multiple applications without custom point-to-point coding.
+      Glyue is an iPaaS purpose-built for financial institution integration use cases.
+    synonyms:
+      - Integration Platform as a Service
+    tags:
+      - Platform
+      - Technology
+
+  - term: Open Banking
+    definition: >-
+      A regulatory framework (e.g., CFPB Section 1033 in the US, PSD2 in Europe)
+      requiring banks to share customer financial data via standardized APIs with
+      authorized third parties. Sandbox Banking facilitates open banking connectivity.
+    tags:
+      - Compliance
+      - Regulation
+
+  - term: CFPB Section 1033
+    definition: >-
+      Consumer Financial Protection Bureau rule requiring US financial institutions
+      to provide consumers and authorized third parties access to personal financial
+      data. Sandbox Banking integrations are designed to support Section 1033 compliance.
+    tags:
+      - Compliance
+      - Regulation
+      - Open Banking
+
+  - term: Mask
+    definition: >-
+      A Glyue data protection feature that replaces sensitive field values with
+      "XXXXXXXXXXXX" in run history logs, preventing exposure of PII, account numbers,
+      or other sensitive data in audit records.
+    tags:
+      - Data Protection
+      - Governance
+      - Security
+
+  - term: call_for_each
+    definition: >-
+      A Glyue service request parameter that enables iterating over a list of inputs
+      and making one service request call per item. Provides sridx (index) and sritem
+      (current item) context variables during iteration.
+    tags:
+      - Core Concept
+      - Iteration
+
+  - term: Loan Booking
+    definition: >-
+      A common banking integration pattern where a loan origination system (nCino,
+      DecisionPro) triggers Glyue to create or update a loan record in the core
+      banking system after approval. One of Glyue's most common pre-built templates.
+    tags:
+      - Banking
+      - Use Case
+
+  - term: Customer 360
+    definition: >-
+      An integration pattern that aggregates customer data from multiple banking
+      systems (core, CRM, loan origination, deposits) into a unified view. Glyue
+      pre-built template for Customer 360 solutions.
+    tags:
+      - Banking
+      - Use Case
+
+categories:
+  - name: Platform Core
+    terms:
+      - Glyue
+      - Integration
+      - Service Request
+      - Adapter
+      - iPaaS
+
+  - name: Data Transformation
+    terms:
+      - Field Mapping
+      - Value Mapping
+      - call_for_each
+      - Mask
+
+  - name: Governance and Compliance
+    terms:
+      - Validation Rule
+      - Run History
+      - Hook
+      - Open Banking
+      - CFPB Section 1033
+
+  - name: Banking Systems
+    terms:
+      - Core Banking
+      - Loan Booking
+      - Customer 360
