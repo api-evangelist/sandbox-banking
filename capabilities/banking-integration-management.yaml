@@ -1,0 +1,373 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Sandbox Banking Integration Management"
+  description: >-
+    Banking integration workflow management capability using the Glyue Integration
+    Gateway API. Provides unified access to integration workflow lifecycle management,
+    service request adapter configuration, field mapping definition, and integration
+    execution for financial institutions connecting core banking systems with fintech
+    applications. Designed for integration engineers, bank operations teams, and fintech
+    developers building connections between banking cores (Fiserv, Jack Henry, FIS) and
+    loan origination systems, CRMs, and KYC/AML services.
+  tags:
+    - Banking Integration
+    - Core Banking
+    - Field Mapping
+    - Financial Services
+    - Fintech
+    - Glyue
+    - Integration Platform
+    - iPaaS
+    - Open Banking
+    - Sandbox Banking
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      GLYUE_API_TOKEN: GLYUE_API_TOKEN
+
+capability:
+  consumes:
+    - import: glyue
+      location: ./shared/glyue.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: banking-integration-api
+      description: "Unified REST API for Sandbox Banking Glyue integration workflow management."
+      resources:
+        - path: /v1/integrations
+          name: integrations
+          description: "Integration workflow lifecycle management."
+          operations:
+            - method: GET
+              name: list-integrations
+              description: "List all Glyue integration workflows."
+              call: "glyue.list-integrations"
+              with:
+                status: "rest.status"
+                page: "rest.page"
+                page_size: "rest.page_size"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-integration
+              description: "Create a new integration workflow."
+              call: "glyue.create-integration"
+              with:
+                name: "rest.name"
+                description: "rest.description"
+                status: "rest.status"
+                integrationType: "rest.integrationType"
+                sourceSystem: "rest.sourceSystem"
+                targetSystem: "rest.targetSystem"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/integrations/{integrationId}
+          name: integration-detail
+          description: "Individual integration detail and management."
+          operations:
+            - method: GET
+              name: get-integration
+              description: "Get full details of an integration including service requests and field mappings."
+              call: "glyue.get-integration"
+              with:
+                integrationId: "rest.integrationId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-integration
+              description: "Update an existing integration workflow configuration."
+              call: "glyue.update-integration"
+              with:
+                integrationId: "rest.integrationId"
+                name: "rest.name"
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-integration
+              description: "Delete an integration workflow."
+              call: "glyue.delete-integration"
+              with:
+                integrationId: "rest.integrationId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/integrations/{integrationId}/run
+          name: integration-run
+          description: "Integration execution endpoint."
+          operations:
+            - method: POST
+              name: run-integration
+              description: "Execute an integration workflow with an input payload."
+              call: "glyue.run-integration"
+              with:
+                integrationId: "rest.integrationId"
+                payload: "rest.payload"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/integrations/{integrationId}/service-requests
+          name: service-requests
+          description: "Service request adapter configuration."
+          operations:
+            - method: GET
+              name: list-service-requests
+              description: "List service request adapters in an integration."
+              call: "glyue.list-service-requests"
+              with:
+                integrationId: "rest.integrationId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-service-request
+              description: "Add a service request adapter step to an integration."
+              call: "glyue.create-service-request"
+              with:
+                integrationId: "rest.integrationId"
+                name: "rest.name"
+                adapter: "rest.adapter"
+                operation: "rest.operation"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/integrations/{integrationId}/field-mappings
+          name: field-mappings
+          description: "Source-to-target field mapping configuration."
+          operations:
+            - method: GET
+              name: list-field-mappings
+              description: "List field mapping rules for an integration."
+              call: "glyue.list-field-mappings"
+              with:
+                integrationId: "rest.integrationId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-field-mapping
+              description: "Create a field mapping rule for source-to-target data transformation."
+              call: "glyue.create-field-mapping"
+              with:
+                integrationId: "rest.integrationId"
+                sourceField: "rest.sourceField"
+                targetField: "rest.targetField"
+                transform: "rest.transform"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/value-mappings
+          name: value-mappings
+          description: "Enumerated value translation tables."
+          operations:
+            - method: GET
+              name: list-value-mappings
+              description: "List value mapping tables for enum translation between systems."
+              call: "glyue.list-value-mappings"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-value-mapping
+              description: "Create a value mapping table."
+              call: "glyue.create-value-mapping"
+              with:
+                name: "rest.name"
+                description: "rest.description"
+                entries: "rest.entries"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/run-history
+          name: run-history
+          description: "Integration run audit log for GLBA/FFIEC compliance."
+          operations:
+            - method: GET
+              name: list-run-history
+              description: "List integration run history with status, timestamps, and error details."
+              call: "glyue.list-run-history"
+              with:
+                integration_id: "rest.integration_id"
+                status: "rest.status"
+                start_date: "rest.start_date"
+                end_date: "rest.end_date"
+                page: "rest.page"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/adapters
+          name: adapters
+          description: "Available core banking and fintech adapters."
+          operations:
+            - method: GET
+              name: list-adapters
+              description: "List all Glyue adapters (Fiserv, Jack Henry, FIS, Salesforce, nCino, etc.)."
+              call: "glyue.list-adapters"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: banking-integration-mcp
+      transport: http
+      description: "MCP server for AI-assisted Sandbox Banking Glyue integration management and execution."
+      tools:
+        - name: list-integrations
+          description: "List all Glyue integration workflows. Use to discover available banking integrations."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "glyue.list-integrations"
+          with:
+            status: "tools.status"
+            page: "tools.page"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-integration
+          description: "Get full details of an integration workflow including service requests, field mappings, and validation rules."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "glyue.get-integration"
+          with:
+            integrationId: "tools.integrationId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-integration
+          description: "Create a new Glyue integration workflow connecting a source system to a target banking system."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "glyue.create-integration"
+          with:
+            name: "tools.name"
+            description: "tools.description"
+            status: "tools.status"
+            integrationType: "tools.integrationType"
+            sourceSystem: "tools.sourceSystem"
+            targetSystem: "tools.targetSystem"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: run-integration
+          description: "Execute a Glyue integration workflow with an input payload. Returns run ID, status, and output from the target banking system."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "glyue.run-integration"
+          with:
+            integrationId: "tools.integrationId"
+            payload: "tools.payload"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-service-requests
+          description: "List service request adapter steps configured in an integration, showing the execution sequence."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "glyue.list-service-requests"
+          with:
+            integrationId: "tools.integrationId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-service-request
+          description: "Add a service request adapter step to an integration workflow (e.g., Fiserv createLoan, Jack Henry postTransaction)."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "glyue.create-service-request"
+          with:
+            integrationId: "tools.integrationId"
+            name: "tools.name"
+            adapter: "tools.adapter"
+            operation: "tools.operation"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-field-mappings
+          description: "List field mapping rules for an integration showing source-to-target data transformation configuration."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "glyue.list-field-mappings"
+          with:
+            integrationId: "tools.integrationId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-field-mapping
+          description: "Create a field mapping rule that transforms a source field to a target field with optional Python transformation."
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "glyue.create-field-mapping"
+          with:
+            integrationId: "tools.integrationId"
+            sourceField: "tools.sourceField"
+            targetField: "tools.targetField"
+            transform: "tools.transform"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-run-history
+          description: "List integration run history for audit and compliance review. Filter by integration, status, or date range."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "glyue.list-run-history"
+          with:
+            integration_id: "tools.integration_id"
+            status: "tools.status"
+            start_date: "tools.start_date"
+            end_date: "tools.end_date"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-run-history
+          description: "Get full audit detail for a specific integration run including request body, response body, and service request execution log."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "glyue.get-run-history"
+          with:
+            runId: "tools.runId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-adapters
+          description: "List all available Glyue adapters including core banking systems (Fiserv, Jack Henry, FIS) and fintech connectors."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "glyue.list-adapters"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-value-mappings
+          description: "List value mapping tables used for translating enumerated values between banking systems (e.g., loan type codes)."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "glyue.list-value-mappings"
+          outputParameters:
+            - type: object
+              mapping: "$."

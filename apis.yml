@@ -33,6 +33,7 @@ apis:
       workflows, managing service request adapters, configuring field mappings,
       value mappings, validation rules, and accessing run history audit logs.
     humanURL: https://glyue.docs.sandboxbanking.com/
+    baseURL: https://{tenant}.sandboxbanking.com/api
     tags:
       - Audit
       - Banking Integration
@@ -47,6 +48,8 @@ apis:
         url: https://glyue.docs.sandboxbanking.com/
       - type: Documentation
         url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
+      - type: OpenAPI
+        url: openapi/sandbox-banking-glyue-openapi.yml
   - aid: sandbox-banking:mockbank
     name: Mock Bank API
     description: >-
@@ -76,12 +79,27 @@ common:
   - type: Website
     url: https://sandboxbanking.com/
     title: Sandbox Banking Website
+  - type: SpectralRules
+    url: rules/sandbox-banking-rules.yml
+    title: Sandbox Banking API Spectral Rules
+  - type: NaftikoCapability
+    url: capabilities/banking-integration-management.yaml
+    title: Sandbox Banking Integration Management Capability
   - type: JSONSchema
     url: json-schema/sandbox-banking-integration-schema.json
     title: Sandbox Banking Integration Schema
+  - type: JSONStructure
+    url: json-structure/sandbox-banking-integration-structure.json
+    title: Sandbox Banking Integration Structure
   - type: JSONLDContext
     url: json-ld/sandbox-banking-context.jsonld
     title: Sandbox Banking JSON-LD Context
+  - type: Example
+    url: examples/sandbox-banking-list-integrations-example.json
+    title: Sandbox Banking List Integrations Example
+  - type: Example
+    url: examples/sandbox-banking-run-integration-example.json
+    title: Sandbox Banking Run Integration Example
   - type: Vocabulary
     url: vocabulary/sandbox-banking-vocabulary.yml
     title: Sandbox Banking Vocabulary

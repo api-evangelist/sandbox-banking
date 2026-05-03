@@ -1,0 +1,66 @@
+{
+  "summary": "List Integrations",
+  "description": "Example request and response for listing Glyue integration workflows configured in the Sandbox Banking platform.",
+  "request": {
+    "method": "GET",
+    "url": "https://your-institution.sandboxbanking.com/api/integrations",
+    "headers": {
+      "Authorization": "Token {{GLYUE_API_TOKEN}}",
+      "Accept": "application/json"
+    },
+    "queryParameters": {
+      "status": "active",
+      "page": 1,
+      "page_size": 20
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "count": 3,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": "intg-001",
+          "name": "Loan Booking to Fiserv Signature",
+          "description": "Books approved loans from nCino LOS into Fiserv Signature core banking.",
+          "status": "active",
+          "integrationType": "web_service_api",
+          "sourceSystem": "nCino",
+          "targetSystem": "Fiserv Signature",
+          "serviceRequestCount": 3,
+          "createdAt": "2025-06-01T09:00:00Z",
+          "updatedAt": "2026-04-15T14:30:00Z"
+        },
+        {
+          "id": "intg-002",
+          "name": "Member Onboarding to Jack Henry Symitar",
+          "description": "Creates new credit union member records in Jack Henry Symitar from Salesforce CRM.",
+          "status": "active",
+          "integrationType": "web_service_api",
+          "sourceSystem": "Salesforce",
+          "targetSystem": "Jack Henry Symitar",
+          "serviceRequestCount": 5,
+          "createdAt": "2025-08-20T11:00:00Z",
+          "updatedAt": "2026-03-10T16:45:00Z"
+        },
+        {
+          "id": "intg-003",
+          "name": "KYC Identity Verification",
+          "description": "Routes new account opening requests through Alloy identity verification before core banking account creation.",
+          "status": "active",
+          "integrationType": "web_service_api",
+          "sourceSystem": "Digital Account Opening",
+          "targetSystem": "Alloy",
+          "serviceRequestCount": 2,
+          "createdAt": "2025-11-05T08:30:00Z",
+          "updatedAt": "2026-05-01T10:00:00Z"
+        }
+      ]
+    }
+  }
+}

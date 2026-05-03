@@ -1,0 +1,925 @@
+openapi: 3.0.3
+info:
+  title: Sandbox Banking Glyue Integration Gateway API
+  description: >-
+    The Glyue Integration Gateway API provides programmatic access to the Sandbox
+    Banking (nCino Integration Gateway) platform for building, managing, and
+    monitoring banking integrations. The API supports creating and executing
+    integration workflows, managing service request adapters, configuring field
+    mappings, value mappings, validation rules, and accessing run history audit
+    logs. Designed for financial institutions connecting core banking systems
+    (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  version: 1.0.0
+  contact:
+    name: Sandbox Banking Support
+    url: https://glyue.docs.sandboxbanking.com/
+  license:
+    name: Proprietary
+servers:
+  - url: https://{tenant}.sandboxbanking.com/api
+    description: Glyue tenant API endpoint
+    variables:
+      tenant:
+        default: your-institution
+        description: Your institution's Glyue tenant subdomain
+tags:
+  - name: Integrations
+    description: Integration workflow management.
+  - name: Service Requests
+    description: Service request adapter operations.
+  - name: Field Mappings
+    description: Field mapping configuration.
+  - name: Value Mappings
+    description: Value mapping table management.
+  - name: Run History
+    description: Integration run audit log access.
+  - name: Adapters
+    description: Core banking and fintech adapter management.
+paths:
+  /integrations:
+    get:
+      operationId: listIntegrations
+      summary: List Integrations
+      description: >-
+        Returns a list of all integration workflows configured in the Glyue
+        platform for the authenticated tenant.
+      tags:
+        - Integrations
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filter integrations by status.
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - draft
+              - testing
+              - deprecated
+        - name: page
+          in: query
+          required: false
+          description: Page number for pagination.
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          required: false
+          description: Number of results per page.
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        "200":
+          description: List of integrations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Total number of integrations.
+                  next:
+                    type: string
+                    format: uri
+                    description: URL to the next page.
+                  previous:
+                    type: string
+                    format: uri
+                    description: URL to the previous page.
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Integration"
+        "401":
+          description: Unauthorized.
+        "403":
+          description: Forbidden.
+    post:
+      operationId: createIntegration
+      summary: Create Integration
+      description: Creates a new integration workflow in the Glyue platform.
+      tags:
+        - Integrations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIntegrationRequest"
+      responses:
+        "201":
+          description: Integration created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Integration"
+        "400":
+          description: Validation error.
+        "401":
+          description: Unauthorized.
+  /integrations/{integrationId}:
+    get:
+      operationId: getIntegration
+      summary: Get Integration
+      description: Returns details for a specific integration workflow.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      responses:
+        "200":
+          description: Integration details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IntegrationDetail"
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Integration not found.
+    put:
+      operationId: updateIntegration
+      summary: Update Integration
+      description: Updates an existing integration workflow configuration.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIntegrationRequest"
+      responses:
+        "200":
+          description: Integration updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Integration"
+        "400":
+          description: Validation error.
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Integration not found.
+    delete:
+      operationId: deleteIntegration
+      summary: Delete Integration
+      description: Deletes an integration workflow from the platform.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      responses:
+        "204":
+          description: Integration deleted.
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Integration not found.
+  /integrations/{integrationId}/run:
+    post:
+      operationId: runIntegration
+      summary: Run Integration
+      description: >-
+        Executes an integration workflow synchronously or asynchronously with
+        the provided input payload. Returns the run ID for status tracking.
+      tags:
+        - Integrations
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Input payload for the integration run.
+              additionalProperties: true
+            examples:
+              LoanBooking:
+                summary: Loan booking integration input
+                value:
+                  loan_number: "LN-2026-001234"
+                  borrower_id: "CUST-98765"
+                  loan_amount: 250000.00
+                  loan_type: "mortgage"
+      responses:
+        "200":
+          description: Integration run completed or initiated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RunResult"
+        "400":
+          description: Invalid input payload.
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Integration not found.
+  /integrations/{integrationId}/service-requests:
+    get:
+      operationId: listServiceRequests
+      summary: List Service Requests
+      description: >-
+        Returns all service request adapters configured for an integration,
+        in execution order.
+      tags:
+        - Service Requests
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      responses:
+        "200":
+          description: List of service requests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ServiceRequest"
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Integration not found.
+    post:
+      operationId: createServiceRequest
+      summary: Create Service Request
+      description: Adds a new service request adapter to an integration workflow.
+      tags:
+        - Service Requests
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateServiceRequestRequest"
+      responses:
+        "201":
+          description: Service request created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceRequest"
+        "400":
+          description: Validation error.
+        "401":
+          description: Unauthorized.
+  /integrations/{integrationId}/field-mappings:
+    get:
+      operationId: listFieldMappings
+      summary: List Field Mappings
+      description: >-
+        Returns all field mapping definitions for a specific integration,
+        showing source-to-target data transformation rules.
+      tags:
+        - Field Mappings
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      responses:
+        "200":
+          description: List of field mappings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FieldMapping"
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Integration not found.
+    post:
+      operationId: createFieldMapping
+      summary: Create Field Mapping
+      description: Creates a new field mapping rule for source-to-target data transformation.
+      tags:
+        - Field Mappings
+      parameters:
+        - $ref: "#/components/parameters/IntegrationIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFieldMappingRequest"
+      responses:
+        "201":
+          description: Field mapping created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FieldMapping"
+        "400":
+          description: Validation error.
+        "401":
+          description: Unauthorized.
+  /value-mappings:
+    get:
+      operationId: listValueMappings
+      summary: List Value Mappings
+      description: >-
+        Returns all value mapping tables configured in the platform for
+        translating enumerated values between source and target systems.
+      tags:
+        - Value Mappings
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Page number.
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          required: false
+          description: Results per page.
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: List of value mappings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ValueMapping"
+        "401":
+          description: Unauthorized.
+    post:
+      operationId: createValueMapping
+      summary: Create Value Mapping
+      description: Creates a new value mapping table for translating enumerated field values.
+      tags:
+        - Value Mappings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateValueMappingRequest"
+      responses:
+        "201":
+          description: Value mapping created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValueMapping"
+        "400":
+          description: Validation error.
+        "401":
+          description: Unauthorized.
+  /run-history:
+    get:
+      operationId: listRunHistory
+      summary: List Run History
+      description: >-
+        Returns the run history audit log for integration executions, with
+        request/response bodies, timestamps, statuses, and error details.
+      tags:
+        - Run History
+      parameters:
+        - name: integration_id
+          in: query
+          required: false
+          description: Filter by integration ID.
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: Filter by run status.
+          schema:
+            type: string
+            enum:
+              - success
+              - failure
+              - running
+              - pending
+        - name: start_date
+          in: query
+          required: false
+          description: Filter runs on or after this date (ISO 8601).
+          schema:
+            type: string
+            format: date-time
+        - name: end_date
+          in: query
+          required: false
+          description: Filter runs on or before this date (ISO 8601).
+          schema:
+            type: string
+            format: date-time
+        - name: page
+          in: query
+          required: false
+          description: Page number.
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          required: false
+          description: Results per page.
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        "200":
+          description: Run history entries.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                  previous:
+                    type: string
+                    format: uri
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/RunHistoryEntry"
+        "401":
+          description: Unauthorized.
+  /run-history/{runId}:
+    get:
+      operationId: getRunHistory
+      summary: Get Run History Entry
+      description: Returns the full audit detail for a specific integration run including request body, response body, and service request execution log.
+      tags:
+        - Run History
+      parameters:
+        - name: runId
+          in: path
+          required: true
+          description: Run identifier.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Run history detail.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RunHistoryDetail"
+        "401":
+          description: Unauthorized.
+        "404":
+          description: Run not found.
+  /adapters:
+    get:
+      operationId: listAdapters
+      summary: List Adapters
+      description: >-
+        Returns all banking system and fintech adapters available in the Glyue
+        platform including core banking adapters (Fiserv, Jack Henry, FIS) and
+        fintech connectors (Salesforce, nCino, Encompass).
+      tags:
+        - Adapters
+      responses:
+        "200":
+          description: List of available adapters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Adapter"
+        "401":
+          description: Unauthorized.
+components:
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Token-based authentication. Include your API token as:
+        Authorization: Token <your-token>
+  parameters:
+    IntegrationIdParam:
+      name: integrationId
+      in: path
+      required: true
+      description: Unique integration identifier.
+      schema:
+        type: string
+  schemas:
+    Integration:
+      type: object
+      description: A Glyue integration workflow.
+      properties:
+        id:
+          type: string
+          description: Unique integration identifier.
+        name:
+          type: string
+          description: Integration name (e.g., Loan Booking to Fiserv Signature).
+        description:
+          type: string
+          description: What this integration does and which systems it connects.
+        status:
+          type: string
+          description: Current integration status.
+          enum:
+            - active
+            - inactive
+            - draft
+            - testing
+            - deprecated
+        integrationType:
+          type: string
+          description: Integration pattern type.
+          enum:
+            - web_service_api
+            - batch_etl
+            - file_transfer
+            - event_pubsub
+            - webhook
+        sourceSystem:
+          type: string
+          description: Source system name.
+        targetSystem:
+          type: string
+          description: Target system name.
+        serviceRequestCount:
+          type: integer
+          description: Number of service requests in this integration.
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last modification timestamp.
+    IntegrationDetail:
+      allOf:
+        - $ref: "#/components/schemas/Integration"
+      properties:
+        serviceRequests:
+          type: array
+          description: Service request adapters in execution order.
+          items:
+            $ref: "#/components/schemas/ServiceRequest"
+        fieldMappings:
+          type: array
+          description: Field mapping rules.
+          items:
+            $ref: "#/components/schemas/FieldMapping"
+        validationRules:
+          type: array
+          description: Validation rules.
+          items:
+            $ref: "#/components/schemas/ValidationRule"
+    CreateIntegrationRequest:
+      type: object
+      required:
+        - name
+        - status
+      properties:
+        name:
+          type: string
+          description: Integration name.
+        description:
+          type: string
+          description: Integration description.
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - draft
+            - testing
+        integrationType:
+          type: string
+          enum:
+            - web_service_api
+            - batch_etl
+            - file_transfer
+            - event_pubsub
+            - webhook
+        sourceSystem:
+          type: string
+          description: Source system name.
+        targetSystem:
+          type: string
+          description: Target system name.
+    ServiceRequest:
+      type: object
+      description: A service request adapter step within an integration.
+      properties:
+        id:
+          type: string
+          description: Service request identifier.
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
+        operation:
+          type: string
+          description: Operation name (e.g., createLoan, getAccount, postTransaction).
+        sequence:
+          type: integer
+          description: Execution order within the integration.
+        callForEach:
+          type: boolean
+          description: Whether this iterates over a list of inputs.
+        enabled:
+          type: boolean
+          description: Whether this service request is active.
+    CreateServiceRequestRequest:
+      type: object
+      required:
+        - name
+        - adapter
+        - operation
+      properties:
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter identifier.
+        operation:
+          type: string
+          description: Operation name.
+        sequence:
+          type: integer
+          description: Execution order.
+        callForEach:
+          type: boolean
+          description: Whether to iterate over a list.
+    FieldMapping:
+      type: object
+      description: A field mapping rule transforming source data to target format.
+      properties:
+        id:
+          type: string
+          description: Field mapping identifier.
+        sourceField:
+          type: string
+          description: Source field path or expression.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional Python transformation formula or expression.
+        valueMapping:
+          type: string
+          description: Reference to a value mapping table for enum translation.
+        required:
+          type: boolean
+          description: Whether this mapping is required.
+    CreateFieldMappingRequest:
+      type: object
+      required:
+        - sourceField
+        - targetField
+      properties:
+        sourceField:
+          type: string
+          description: Source field path.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional transformation formula.
+        valueMapping:
+          type: string
+          description: Value mapping table reference.
+        required:
+          type: boolean
+    ValidationRule:
+      type: object
+      description: A validation rule that must pass before integration proceeds.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Rule name.
+        condition:
+          type: string
+          description: Boolean expression that must be true.
+        errorMessage:
+          type: string
+          description: Error message returned if validation fails.
+        sequence:
+          type: integer
+          description: Validation order.
+    ValueMapping:
+      type: object
+      description: A value mapping table for translating enumerated values between systems.
+      properties:
+        id:
+          type: string
+          description: Value mapping table identifier.
+        name:
+          type: string
+          description: Table name.
+        description:
+          type: string
+          description: What this mapping table is used for.
+        entries:
+          type: array
+          description: Source-to-target value translation entries.
+          items:
+            type: object
+            properties:
+              sourceValue:
+                type: string
+                description: Source system value.
+              targetValue:
+                type: string
+                description: Target system value.
+    CreateValueMappingRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceValue:
+                type: string
+              targetValue:
+                type: string
+    RunResult:
+      type: object
+      description: Result of an integration run execution.
+      properties:
+        runId:
+          type: string
+          description: Unique run identifier for status tracking.
+        status:
+          type: string
+          description: Run status.
+          enum:
+            - success
+            - failure
+            - running
+            - pending
+        integrationId:
+          type: string
+          description: Integration that was run.
+        startTime:
+          type: string
+          format: date-time
+          description: Run start timestamp.
+        endTime:
+          type: string
+          format: date-time
+          description: Run completion timestamp.
+        responseBody:
+          type: object
+          description: Integration output payload.
+          additionalProperties: true
+        errorMessage:
+          type: string
+          description: Error message if run failed.
+    RunHistoryEntry:
+      type: object
+      description: Summary of a past integration run.
+      properties:
+        id:
+          type: string
+          description: Run history entry ID.
+        integrationId:
+          type: string
+          description: Integration identifier.
+        integrationName:
+          type: string
+          description: Integration display name.
+        status:
+          type: string
+          enum:
+            - success
+            - failure
+            - running
+            - pending
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        durationMs:
+          type: integer
+          description: Run duration in milliseconds.
+        triggeredBy:
+          type: string
+          description: User or system that triggered the run.
+    RunHistoryDetail:
+      allOf:
+        - $ref: "#/components/schemas/RunHistoryEntry"
+      properties:
+        requestBody:
+          type: object
+          description: Input payload sent to the integration.
+          additionalProperties: true
+        responseBody:
+          type: object
+          description: Output payload from the integration.
+          additionalProperties: true
+        serviceRequestLog:
+          type: array
+          description: Per-service-request execution log.
+          items:
+            type: object
+            properties:
+              serviceRequestName:
+                type: string
+              adapter:
+                type: string
+              operation:
+                type: string
+              status:
+                type: string
+              requestSent:
+                type: object
+                additionalProperties: true
+              responseReceived:
+                type: object
+                additionalProperties: true
+              durationMs:
+                type: integer
+        errorDetails:
+          type: string
+          description: Full error traceback if run failed.
+    Adapter:
+      type: object
+      description: A banking system or fintech adapter available in Glyue.
+      properties:
+        id:
+          type: string
+          description: Adapter identifier.
+        name:
+          type: string
+          description: Adapter display name (e.g., Fiserv Signature, Jack Henry Symitar).
+        adapterType:
+          type: string
+          description: Adapter category.
+          enum:
+            - core_banking
+            - loan_origination
+            - crm
+            - kyc_aml
+            - document_management
+            - payment
+            - data_warehouse
+        vendor:
+          type: string
+          description: Vendor or product name.
+        operations:
+          type: array
+          description: Available operations for this adapter.
+          items:
+            type: string
+        version:
+          type: string
+          description: Adapter version.
+security:
+  - TokenAuth: []

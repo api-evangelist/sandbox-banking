@@ -1,0 +1,48 @@
+{
+  "summary": "Run Integration",
+  "description": "Example request and response for executing a Glyue integration workflow via the POST /integrations/{integrationId}/run endpoint. Demonstrates a loan booking integration posting to Fiserv Signature.",
+  "request": {
+    "method": "POST",
+    "url": "https://your-institution.sandboxbanking.com/api/integrations/intg-001/run",
+    "headers": {
+      "Authorization": "Token {{GLYUE_API_TOKEN}}",
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "body": {
+      "loan_number": "LN-2026-001234",
+      "borrower_id": "CUST-98765",
+      "loan_amount": 285000.00,
+      "loan_type": "conventional_30yr",
+      "rate": 6.875,
+      "origination_fee": 2850.00,
+      "closing_date": "2026-05-15",
+      "property_address": {
+        "street": "123 Main St",
+        "city": "Springfield",
+        "state": "IL",
+        "zip": "62701"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "runId": "run-2026050200001",
+      "status": "success",
+      "integrationId": "intg-001",
+      "startTime": "2026-05-02T14:30:00Z",
+      "endTime": "2026-05-02T14:30:02.847Z",
+      "responseBody": {
+        "core_loan_id": "FS-2026-001234",
+        "account_number": "1234567890",
+        "booking_status": "booked",
+        "effective_date": "2026-05-15"
+      },
+      "errorMessage": null
+    }
+  }
+}

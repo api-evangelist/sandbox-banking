@@ -17,7 +17,7 @@ API Integration, Banking, Core Banking, Credit Unions, Financial Services, Finte
 
 ### Glyue Integration Gateway API
 
-The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking integration platform for building, managing, and monitoring banking integrations including service requests, field mappings, value mappings, validation rules, and audit run history.
+The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking integration platform for building, managing, and monitoring banking integrations including service requests, field mappings, value mappings, validation rules, run execution, and audit run history. Base URL: `https://{tenant}.sandboxbanking.com/api`.
 
 #### Tags
 
@@ -27,6 +27,7 @@ Audit, Banking Integration, Core Banking, Field Mapping, Glyue, Integration, iPa
 
 - [Documentation](https://glyue.docs.sandboxbanking.com/)
 - [Documentation](https://glyue.docs.sandboxbanking.com/reference/integration_anatomy) — Integration Anatomy Reference
+- [OpenAPI](openapi/sandbox-banking-glyue-openapi.yml) — Glyue Integration Gateway API
 
 ### Mock Bank API
 
@@ -47,13 +48,40 @@ Banking, Mock API, Sandbox, Testing
 - [Documentation](https://mockbank.docs.sandboxbanking.com/) — Mock Bank API
 - [Website](https://sandboxbanking.com/) — Sandbox Banking
 
+## OpenAPI Specifications
+
+- [openapi/sandbox-banking-glyue-openapi.yml](openapi/sandbox-banking-glyue-openapi.yml) — Glyue Integration Gateway API (integrations, service requests, field mappings, value mappings, run history, adapters)
+
+## Rules
+
+- [rules/sandbox-banking-rules.yml](rules/sandbox-banking-rules.yml) — Sandbox Banking API Spectral Rules
+
+## Capabilities
+
+### Shared Definitions
+
+- [capabilities/shared/glyue.yaml](capabilities/shared/glyue.yaml) — Glyue Integration Gateway API (integrations, service requests, field mappings, value mappings, run history, adapters)
+
+### Workflow Capabilities
+
+- [capabilities/banking-integration-management.yaml](capabilities/banking-integration-management.yaml) — Banking Integration Management (integration lifecycle, execution, field mapping, audit, adapters)
+
 ## JSON Schema
 
 - [json-schema/sandbox-banking-integration-schema.json](json-schema/sandbox-banking-integration-schema.json) — Integration Definition
 
+## JSON Structure
+
+- [json-structure/sandbox-banking-integration-structure.json](json-structure/sandbox-banking-integration-structure.json) — Integration Field Hierarchy
+
 ## JSON-LD
 
 - [json-ld/sandbox-banking-context.jsonld](json-ld/sandbox-banking-context.jsonld) — Sandbox Banking JSON-LD Context
+
+## Examples
+
+- [examples/sandbox-banking-list-integrations-example.json](examples/sandbox-banking-list-integrations-example.json) — List Integrations Request/Response
+- [examples/sandbox-banking-run-integration-example.json](examples/sandbox-banking-run-integration-example.json) — Run Integration Request/Response
 
 ## Vocabulary
 

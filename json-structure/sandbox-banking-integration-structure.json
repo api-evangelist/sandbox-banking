@@ -1,0 +1,207 @@
+{
+  "name": "Sandbox Banking Integration",
+  "description": "Field hierarchy for a Glyue integration workflow definition as managed by the Sandbox Banking (nCino Integration Gateway) platform.",
+  "url": "https://glyue.docs.sandboxbanking.com/reference/integration_anatomy",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "Unique integration identifier (system-assigned).",
+      "example": "intg-001-loan-booking"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "Human-readable integration name.",
+      "example": "Loan Booking to Fiserv Signature"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "What this integration does and which systems it connects.",
+      "example": "Transfers booked loan data from nCino LOS to Fiserv Signature core banking."
+    },
+    {
+      "name": "status",
+      "type": "enum",
+      "required": true,
+      "description": "Current lifecycle status of the integration.",
+      "allowedValues": ["active", "inactive", "draft", "testing", "deprecated"],
+      "example": "active"
+    },
+    {
+      "name": "integrationType",
+      "type": "enum",
+      "required": false,
+      "description": "Integration pattern type.",
+      "allowedValues": ["web_service_api", "batch_etl", "file_transfer", "event_pubsub", "webhook"],
+      "example": "web_service_api"
+    },
+    {
+      "name": "sourceSystem",
+      "type": "string",
+      "required": false,
+      "description": "Name of the system that sends data into this integration.",
+      "example": "nCino"
+    },
+    {
+      "name": "targetSystem",
+      "type": "string",
+      "required": false,
+      "description": "Name of the system that receives data from this integration.",
+      "example": "Fiserv Signature"
+    },
+    {
+      "name": "serviceRequests",
+      "type": "array",
+      "required": false,
+      "description": "Ordered sequence of service request adapter steps.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Service request identifier.",
+          "example": "sr-001"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Service request name.",
+          "example": "Create Loan in Core"
+        },
+        {
+          "name": "adapter",
+          "type": "string",
+          "description": "Adapter identifier (e.g., fiserv_signature, jack_henry_symitar).",
+          "example": "fiserv_signature"
+        },
+        {
+          "name": "operation",
+          "type": "string",
+          "description": "Operation name within the adapter.",
+          "example": "createLoan"
+        },
+        {
+          "name": "sequence",
+          "type": "integer",
+          "description": "Execution order (1-based).",
+          "example": 1
+        },
+        {
+          "name": "callForEach",
+          "type": "boolean",
+          "description": "Whether this service request iterates over a list of inputs.",
+          "example": false
+        },
+        {
+          "name": "enabled",
+          "type": "boolean",
+          "description": "Whether this service request is active.",
+          "example": true
+        }
+      ]
+    },
+    {
+      "name": "fieldMappings",
+      "type": "array",
+      "required": false,
+      "description": "Field mapping rules that transform source data to target format.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Field mapping identifier."
+        },
+        {
+          "name": "sourceField",
+          "type": "string",
+          "description": "Source field path or Python expression.",
+          "example": "loan.borrower.firstName"
+        },
+        {
+          "name": "targetField",
+          "type": "string",
+          "description": "Target field path in the destination system.",
+          "example": "BNAME_F"
+        },
+        {
+          "name": "transform",
+          "type": "string",
+          "description": "Optional Python expression for data transformation.",
+          "example": "value.upper()"
+        },
+        {
+          "name": "valueMapping",
+          "type": "string",
+          "description": "Reference to a value mapping table for enum translation.",
+          "example": "loan-type-mapping"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "description": "Whether this field mapping is required."
+        }
+      ]
+    },
+    {
+      "name": "validationRules",
+      "type": "array",
+      "required": false,
+      "description": "Pre-execution validation rules that must pass before integration proceeds.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Validation rule identifier."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Rule name.",
+          "example": "Loan Amount Positive"
+        },
+        {
+          "name": "condition",
+          "type": "string",
+          "description": "Boolean Python expression that must evaluate to True.",
+          "example": "loan.amount > 0"
+        },
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "description": "Error message returned if validation fails.",
+          "example": "Loan amount must be greater than zero."
+        },
+        {
+          "name": "sequence",
+          "type": "integer",
+          "description": "Validation execution order."
+        }
+      ]
+    },
+    {
+      "name": "auditEnabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Whether run history audit logging is enabled (required for GLBA/FFIEC compliance).",
+      "example": true
+    },
+    {
+      "name": "createdAt",
+      "type": "string (date-time)",
+      "required": false,
+      "description": "ISO 8601 timestamp when the integration was created.",
+      "example": "2026-01-15T10:30:00Z"
+    },
+    {
+      "name": "updatedAt",
+      "type": "string (date-time)",
+      "required": false,
+      "description": "ISO 8601 timestamp when the integration was last modified.",
+      "example": "2026-05-02T14:22:00Z"
+    }
+  ]
+}

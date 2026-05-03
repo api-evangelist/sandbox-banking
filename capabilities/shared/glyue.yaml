@@ -1,0 +1,356 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Sandbox Banking Glyue Integration Gateway API"
+  description: >-
+    Glyue Integration Gateway API for managing banking integration workflows,
+    service request adapters, field mappings, value mappings, and run history
+    audit logs. Used by financial institutions to connect core banking systems
+    with fintech applications.
+  tags:
+    - Audit
+    - Banking Integration
+    - Core Banking
+    - Field Mapping
+    - Glyue
+    - Integration
+    - iPaaS
+    - Workflow
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      GLYUE_API_TOKEN: GLYUE_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: glyue
+      baseUri: https://{tenant}.sandboxbanking.com/api
+      description: "Glyue Integration Gateway REST API."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "Token {{GLYUE_API_TOKEN}}"
+        placement: header
+      resources:
+        - name: integrations
+          path: /integrations
+          description: "Integration workflow management."
+          operations:
+            - name: list-integrations
+              method: GET
+              description: "List all integration workflows."
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by status (active, inactive, draft, testing, deprecated)."
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number."
+                - name: page_size
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Results per page."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-integration
+              method: POST
+              description: "Create a new integration workflow."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  description: "{{tools.description}}"
+                  status: "{{tools.status}}"
+                  integrationType: "{{tools.integrationType}}"
+                  sourceSystem: "{{tools.sourceSystem}}"
+                  targetSystem: "{{tools.targetSystem}}"
+        - name: integration-detail
+          path: /integrations/{integrationId}
+          description: "Individual integration management."
+          operations:
+            - name: get-integration
+              method: GET
+              description: "Get integration workflow details."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-integration
+              method: PUT
+              description: "Update an integration workflow."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  status: "{{tools.status}}"
+            - name: delete-integration
+              method: DELETE
+              description: "Delete an integration workflow."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: integration-run
+          path: /integrations/{integrationId}/run
+          description: "Integration execution."
+          operations:
+            - name: run-integration
+              method: POST
+              description: "Execute an integration workflow with an input payload."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  payload: "{{tools.payload}}"
+        - name: service-requests
+          path: /integrations/{integrationId}/service-requests
+          description: "Service request adapter management."
+          operations:
+            - name: list-service-requests
+              method: GET
+              description: "List service request adapters in an integration."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-service-request
+              method: POST
+              description: "Add a service request adapter to an integration."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  adapter: "{{tools.adapter}}"
+                  operation: "{{tools.operation}}"
+        - name: field-mappings
+          path: /integrations/{integrationId}/field-mappings
+          description: "Field mapping configuration."
+          operations:
+            - name: list-field-mappings
+              method: GET
+              description: "List field mappings for an integration."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-field-mapping
+              method: POST
+              description: "Create a field mapping rule."
+              inputParameters:
+                - name: integrationId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Integration identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  sourceField: "{{tools.sourceField}}"
+                  targetField: "{{tools.targetField}}"
+                  transform: "{{tools.transform}}"
+        - name: value-mappings
+          path: /value-mappings
+          description: "Value mapping table management."
+          operations:
+            - name: list-value-mappings
+              method: GET
+              description: "List value mapping tables."
+              inputParameters:
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-value-mapping
+              method: POST
+              description: "Create a value mapping table."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  description: "{{tools.description}}"
+                  entries: "{{tools.entries}}"
+        - name: run-history
+          path: /run-history
+          description: "Integration run audit log access."
+          operations:
+            - name: list-run-history
+              method: GET
+              description: "List integration run history entries."
+              inputParameters:
+                - name: integration_id
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by integration ID."
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by run status."
+                - name: start_date
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start date filter (ISO 8601)."
+                - name: end_date
+                  in: query
+                  type: string
+                  required: false
+                  description: "End date filter (ISO 8601)."
+                - name: page
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Page number."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-run-history
+              method: GET
+              description: "Get full audit detail for a specific integration run."
+              inputParameters:
+                - name: runId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Run identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: adapters
+          path: /adapters
+          description: "Available banking system and fintech adapter listing."
+          operations:
+            - name: list-adapters
+              method: GET
+              description: "List all available Glyue adapters."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: glyue-api
+      resources:
+        - path: /v1/integrations
+          operations:
+            - method: GET
+              name: list-integrations
+              call: "glyue.list-integrations"
+        - path: /v1/run-history
+          operations:
+            - method: GET
+              name: list-run-history
+              call: "glyue.list-run-history"
+
+    - type: mcp
+      port: 9100
+      namespace: glyue-mcp
+      transport: http
+      tools:
+        - name: list-integrations
+          call: "glyue.list-integrations"
+        - name: run-integration
+          call: "glyue.run-integration"
+        - name: list-run-history
+          call: "glyue.list-run-history"
