@@ -1,0 +1,123 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sandbox Banking Glyue Integration Gateway API — Value Mappings
+  description: 'Sandbox Banking Glyue Integration Gateway API — Value Mappings. 2 operations. Lead operation: List Value Mappings.
+    Self-contained Naftiko capability covering one Sandbox Banking business surface.'
+  tags:
+  - Sandbox Banking
+  - Value Mappings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SANDBOX_BANKING_API_KEY: SANDBOX_BANKING_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: glyue-value-mappings
+    baseUri: https://{tenant}.sandboxbanking.com/api
+    description: Sandbox Banking Glyue Integration Gateway API — Value Mappings business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: value-mappings
+      path: /value-mappings
+      operations:
+      - name: listvaluemappings
+        method: GET
+        description: List Value Mappings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+          description: Page number.
+        - name: page_size
+          in: query
+          type: integer
+          description: Results per page.
+      - name: createvaluemapping
+        method: POST
+        description: Create Value Mapping
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.SANDBOX_BANKING_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: glyue-value-mappings-rest
+    port: 8080
+    description: REST adapter for Sandbox Banking Glyue Integration Gateway API — Value Mappings. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/value-mappings
+      name: value-mappings
+      description: REST surface for value-mappings.
+      operations:
+      - method: GET
+        name: listvaluemappings
+        description: List Value Mappings
+        call: glyue-value-mappings.listvaluemappings
+        with:
+          page: rest.page
+          page_size: rest.page_size
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createvaluemapping
+        description: Create Value Mapping
+        call: glyue-value-mappings.createvaluemapping
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: glyue-value-mappings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sandbox Banking Glyue Integration Gateway API — Value Mappings. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: list-value-mappings
+      description: List Value Mappings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: glyue-value-mappings.listvaluemappings
+      with:
+        page: tools.page
+        page_size: tools.page_size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-value-mapping
+      description: Create Value Mapping
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: glyue-value-mappings.createvaluemapping
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
