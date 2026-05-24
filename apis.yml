@@ -107,6 +107,8 @@ common:
 - type: Vocabulary
   url: vocabulary/sandbox-banking-vocabulary.yml
   title: Sandbox Banking Vocabulary
+- type: LLMsTxt
+  url: https://glyue.docs.sandboxbanking.com/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
