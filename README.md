@@ -1,91 +1,88 @@
-# Sandbox Banking
+# Sandbox Banking (sandbox-banking)
 
-Sandbox Banking (now nCino Integration Gateway) is an Integration Platform as a Service (iPaaS) purpose-built for financial institutions. The platform enables banks and credit unions to connect core banking systems (Fiserv, Jack Henry, FIS, and 14+ other cores) with fintech applications, loan origination systems, CRMs, KYC/AML providers, and 50+ financial services solutions. Glyue, the core integration framework, provides low-code workflow automation with Python extensibility, audit trails, role-based access control, and regulatory compliance support for CFPB Section 1033, GLBA, and FFIEC guidelines.
+Sandbox Banking (now nCino Integration Gateway) is an Integration Platform as a Service (iPaaS) purpose-built for financial institutions. The platform enables banks and credit unions to connect core banking systems (Fiserv, Jack Henry, FIS, and 14+ other cores) with fintech applications, loan origination systems, CRMs, KYC/AML providers, and 50+ financial services solutions. Glyue, the core integration framework, provides low-code workflow automation with Python extensibility, audit trails, role-based access control, and regulatory compliance features aligned with CFPB Section 1033, GLBA, and FFIEC guidelines.
 
-**URL:** [Glyue Integration Gateway Documentation](https://glyue.docs.sandboxbanking.com/)
+**APIs.json:** [https://glyue.docs.sandboxbanking.com/](https://glyue.docs.sandboxbanking.com/)
 
 ## Tags
 
-API Integration, Banking, Core Banking, Credit Unions, Financial Services, Fintech, Integration Platform, iPaaS, Open Banking
+- API Integration
+- Banking
+- Core Banking
+- Credit Unions
+- Financial Services
+- Fintech
+- Integration Platform
+- iPaaS
+- Open Banking
 
 ## Timestamps
 
 - **Created:** 2024-12-25
-- **Modified:** 2026-05-02
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Glyue Integration Gateway API
 
-The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking integration platform for building, managing, and monitoring banking integrations including service requests, field mappings, value mappings, validation rules, run execution, and audit run history. Base URL: `https://{tenant}.sandboxbanking.com/api`.
+The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking integration platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs.
+
+- **Human URL:** [https://glyue.docs.sandboxbanking.com/](https://glyue.docs.sandboxbanking.com/)
+- **Base URL:** `https://{tenant}.sandboxbanking.com/api`
 
 #### Tags
 
-Audit, Banking Integration, Core Banking, Field Mapping, Glyue, Integration, iPaaS, Workflow
+- Audit
+- Banking Integration
+- Core Banking
+- Field Mapping
+- Glyue
+- Integration
+- iPaaS
+- Workflow
 
 #### Properties
 
 - [Documentation](https://glyue.docs.sandboxbanking.com/)
-- [Documentation](https://glyue.docs.sandboxbanking.com/reference/integration_anatomy) — Integration Anatomy Reference
-- [OpenAPI](openapi/sandbox-banking-glyue-openapi.yml) — Glyue Integration Gateway API
+- [Documentation](https://glyue.docs.sandboxbanking.com/reference/integration_anatomy)
+- [OpenAPI](openapi/sandbox-banking-glyue-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/sandbox-banking-glyue.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sandbox-banking-glyue.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Mock Bank API
 
-A sandbox environment for testing and developing banking integrations without connecting to production core banking systems.
+The Mock Bank API provides a sandbox environment for testing and developing banking integrations without connecting to production core banking systems. It simulates standard banking operations including account management, transactions, and customer data in a controlled test environment.
+
+- **Human URL:** [https://mockbank.docs.sandboxbanking.com/](https://mockbank.docs.sandboxbanking.com/)
 
 #### Tags
 
-Banking, Mock API, Sandbox, Testing
+- Banking
+- Mock API
+- Sandbox
+- Testing
 
 #### Properties
 
 - [Documentation](https://mockbank.docs.sandboxbanking.com/reference/introduction)
+- [Postman Collection](collections/sandbox-banking-glyue.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/sandbox-banking-glyue.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
-- [Documentation](https://glyue.docs.sandboxbanking.com/) — Glyue Documentation
-- [Documentation](https://www.ncino.com/solutions/integrations) — nCino Integration Gateway
-- [Documentation](https://mockbank.docs.sandboxbanking.com/) — Mock Bank API
-- [Website](https://sandboxbanking.com/) — Sandbox Banking
-
-## OpenAPI Specifications
-
-- [openapi/sandbox-banking-glyue-openapi.yml](openapi/sandbox-banking-glyue-openapi.yml) — Glyue Integration Gateway API (integrations, service requests, field mappings, value mappings, run history, adapters)
-
-## Rules
-
-- [rules/sandbox-banking-rules.yml](rules/sandbox-banking-rules.yml) — Sandbox Banking API Spectral Rules
-
-## Capabilities
-
-### Shared Definitions
-
-- [capabilities/shared/glyue.yaml](capabilities/shared/glyue.yaml) — Glyue Integration Gateway API (integrations, service requests, field mappings, value mappings, run history, adapters)
-
-### Workflow Capabilities
-
-- [capabilities/banking-integration-management.yaml](capabilities/banking-integration-management.yaml) — Banking Integration Management (integration lifecycle, execution, field mapping, audit, adapters)
-
-## JSON Schema
-
-- [json-schema/sandbox-banking-integration-schema.json](json-schema/sandbox-banking-integration-schema.json) — Integration Definition
-
-## JSON Structure
-
-- [json-structure/sandbox-banking-integration-structure.json](json-structure/sandbox-banking-integration-structure.json) — Integration Field Hierarchy
-
-## JSON-LD
-
-- [json-ld/sandbox-banking-context.jsonld](json-ld/sandbox-banking-context.jsonld) — Sandbox Banking JSON-LD Context
-
-## Examples
-
-- [examples/sandbox-banking-list-integrations-example.json](examples/sandbox-banking-list-integrations-example.json) — List Integrations Request/Response
-- [examples/sandbox-banking-run-integration-example.json](examples/sandbox-banking-run-integration-example.json) — Run Integration Request/Response
-
-## Vocabulary
-
-- [vocabulary/sandbox-banking-vocabulary.yml](vocabulary/sandbox-banking-vocabulary.yml) — Sandbox Banking Vocabulary
+- [LinkedIn](https://www.linkedin.com/company/sandboxbanking)
+- [Documentation](https://glyue.docs.sandboxbanking.com/)
+- [Documentation](https://www.ncino.com/solutions/integrations)
+- [Documentation](https://mockbank.docs.sandboxbanking.com/)
+- [Website](https://sandboxbanking.com/)
+- [Spectral Rules](rules/sandbox-banking-rules.yml)
+- [JSON Schema](json-schema/sandbox-banking-integration-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/sandbox-banking-integration-structure.json)
+- [J S O N L D Context](json-ld/sandbox-banking-context.jsonld)
+- [Example](examples/sandbox-banking-list-integrations-example.json)
+- [Example](examples/sandbox-banking-run-integration-example.json)
+- [Vocabulary](vocabulary/sandbox-banking-vocabulary.yml)
+- [L L Ms Txt](https://glyue.docs.sandboxbanking.com/llms.txt)
 
 ## Maintainers
 

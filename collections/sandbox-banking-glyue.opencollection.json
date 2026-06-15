@@ -1,0 +1,399 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sandbox Banking Glyue Integration Gateway API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter integrations by status."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of all integration workflows configured in the Glyue platform for the authenticated tenant."
+        },
+        {
+          "info": {
+            "name": "Create Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new integration workflow in the Glyue platform."
+        },
+        {
+          "info": {
+            "name": "Get Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ]
+          },
+          "docs": "Returns details for a specific integration workflow."
+        },
+        {
+          "info": {
+            "name": "Update Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing integration workflow configuration."
+        },
+        {
+          "info": {
+            "name": "Delete Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ]
+          },
+          "docs": "Deletes an integration workflow from the platform."
+        },
+        {
+          "info": {
+            "name": "Run Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/run",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes an integration workflow synchronously or asynchronously with the provided input payload. Returns the run ID for status tracking."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Service Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Service Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/service-requests",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ]
+          },
+          "docs": "Returns all service request adapters configured for an integration, in execution order."
+        },
+        {
+          "info": {
+            "name": "Create Service Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/service-requests",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new service request adapter to an integration workflow."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Field Mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Field Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/field-mappings",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ]
+          },
+          "docs": "Returns all field mapping definitions for a specific integration, showing source-to-target data transformation rules."
+        },
+        {
+          "info": {
+            "name": "Create Field Mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/field-mappings",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new field mapping rule for source-to-target data transformation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Value Mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Value Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/value-mappings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Results per page."
+              }
+            ]
+          },
+          "docs": "Returns all value mapping tables configured in the platform for translating enumerated values between source and target systems."
+        },
+        {
+          "info": {
+            "name": "Create Value Mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.sandboxbanking.com/api/value-mappings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new value mapping table for translating enumerated field values."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Run History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Run History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/run-history",
+            "params": [
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by run status."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter runs on or after this date (ISO 8601)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter runs on or before this date (ISO 8601)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Results per page."
+              }
+            ]
+          },
+          "docs": "Returns the run history audit log for integration executions, with request/response bodies, timestamps, statuses, and error details."
+        },
+        {
+          "info": {
+            "name": "Get Run History Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/run-history/:runId",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path",
+                "description": "Run identifier."
+              }
+            ]
+          },
+          "docs": "Returns the full audit detail for a specific integration run including request body, response body, and service request execution log."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Adapters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Adapters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/adapters"
+          },
+          "docs": "Returns all banking system and fintech adapters available in the Glyue platform including core banking adapters (Fiserv, Jack Henry, FIS) and fintech connectors (Salesforce, nCino, Encompass)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
