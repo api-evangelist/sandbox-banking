@@ -89,16 +89,16 @@ common:
   - type: JSONLDContext
     url: json-ld/sandbox-banking-context.jsonld
     title: Sandbox Banking JSON-LD Context
-  - type: Example
+  - type: Examples
     url: examples/sandbox-banking-list-integrations-example.json
     title: Sandbox Banking List Integrations Example
-  - type: Example
+  - type: Examples
     url: examples/sandbox-banking-run-integration-example.json
     title: Sandbox Banking Run Integration Example
   - type: Vocabulary
     url: vocabulary/sandbox-banking-vocabulary.yml
     title: Sandbox Banking Vocabulary
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://glyue.docs.sandboxbanking.com/llms.txt
 maintainers:
   - FN: Kin Lane
