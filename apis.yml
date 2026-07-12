@@ -63,6 +63,10 @@ apis:
       - type: Documentation
         url: https://mockbank.docs.sandboxbanking.com/reference/introduction
 common:
+  - type: DomainSecurity
+    url: security/sandbox-banking-domain-security.yml
+  - type: Authentication
+    url: authentication/sandbox-banking-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/sandboxbanking
   - type: Documentation

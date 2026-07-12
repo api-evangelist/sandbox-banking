@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/sandbox-banking-glyue-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: TokenAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Token-based authentication. Include your API token as: Authorization: Token
+    <your-token>'
+  sources:
+  - openapi/sandbox-banking-glyue-openapi.yml
