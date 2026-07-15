@@ -63,6 +63,8 @@ apis:
       - type: Documentation
         url: https://mockbank.docs.sandboxbanking.com/reference/introduction
 common:
+  - type: AgenticAccess
+    url: agentic-access/sandbox-banking-agentic-access.yml
   - type: DomainSecurity
     url: security/sandbox-banking-domain-security.yml
   - type: Authentication
