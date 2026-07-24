@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: Sandbox Banking Glyue Integration Gateway Adapters Field Mappings API
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  version: 1.0.0
+  contact:
+    name: Sandbox Banking Support
+    url: https://glyue.docs.sandboxbanking.com/
+  license:
+    name: Proprietary
+servers:
+- url: https://{tenant}.sandboxbanking.com/api
+  description: Glyue tenant API endpoint
+  variables:
+    tenant:
+      default: your-institution
+      description: Your institution's Glyue tenant subdomain
+security:
+- TokenAuth: []
+tags:
+- name: Field Mappings
+  description: Field mapping configuration.
+paths:
+  /integrations/{integrationId}/field-mappings:
+    get:
+      operationId: listFieldMappings
+      summary: List Field Mappings
+      description: Returns all field mapping definitions for a specific integration, showing source-to-target data transformation rules.
+      tags:
+      - Field Mappings
+      parameters:
+      - $ref: '#/components/parameters/IntegrationIdParam'
+      responses:
+        '200':
+          description: List of field mappings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FieldMapping'
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Integration not found.
+    post:
+      operationId: createFieldMapping
+      summary: Create Field Mapping
+      description: Creates a new field mapping rule for source-to-target data transformation.
+      tags:
+      - Field Mappings
+      parameters:
+      - $ref: '#/components/parameters/IntegrationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFieldMappingRequest'
+      responses:
+        '201':
+          description: Field mapping created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FieldMapping'
+        '400':
+          description: Validation error.
+        '401':
+          description: Unauthorized.
+components:
+  parameters:
+    IntegrationIdParam:
+      name: integrationId
+      in: path
+      required: true
+      description: Unique integration identifier.
+      schema:
+        type: string
+  schemas:
+    FieldMapping:
+      type: object
+      description: A field mapping rule transforming source data to target format.
+      properties:
+        id:
+          type: string
+          description: Field mapping identifier.
+        sourceField:
+          type: string
+          description: Source field path or expression.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional Python transformation formula or expression.
+        valueMapping:
+          type: string
+          description: Reference to a value mapping table for enum translation.
+        required:
+          type: boolean
+          description: Whether this mapping is required.
+    CreateFieldMappingRequest:
+      type: object
+      required:
+      - sourceField
+      - targetField
+      properties:
+        sourceField:
+          type: string
+          description: Source field path.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional transformation formula.
+        valueMapping:
+          type: string
+          description: Value mapping table reference.
+        required:
+          type: boolean
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Include your API token as: Authorization: Token <your-token>'

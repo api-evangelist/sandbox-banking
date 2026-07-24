@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: Sandbox Banking Glyue Integration Gateway Adapters API
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  version: 1.0.0
+  contact:
+    name: Sandbox Banking Support
+    url: https://glyue.docs.sandboxbanking.com/
+  license:
+    name: Proprietary
+servers:
+- url: https://{tenant}.sandboxbanking.com/api
+  description: Glyue tenant API endpoint
+  variables:
+    tenant:
+      default: your-institution
+      description: Your institution's Glyue tenant subdomain
+security:
+- TokenAuth: []
+tags:
+- name: Adapters
+  description: Core banking and fintech adapter management.
+paths:
+  /adapters:
+    get:
+      operationId: listAdapters
+      summary: List Adapters
+      description: Returns all banking system and fintech adapters available in the Glyue platform including core banking adapters (Fiserv, Jack Henry, FIS) and fintech connectors (Salesforce, nCino, Encompass).
+      tags:
+      - Adapters
+      responses:
+        '200':
+          description: List of available adapters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Adapter'
+        '401':
+          description: Unauthorized.
+components:
+  schemas:
+    Adapter:
+      type: object
+      description: A banking system or fintech adapter available in Glyue.
+      properties:
+        id:
+          type: string
+          description: Adapter identifier.
+        name:
+          type: string
+          description: Adapter display name (e.g., Fiserv Signature, Jack Henry Symitar).
+        adapterType:
+          type: string
+          description: Adapter category.
+          enum:
+          - core_banking
+          - loan_origination
+          - crm
+          - kyc_aml
+          - document_management
+          - payment
+          - data_warehouse
+        vendor:
+          type: string
+          description: Vendor or product name.
+        operations:
+          type: array
+          description: Available operations for this adapter.
+          items:
+            type: string
+        version:
+          type: string
+          description: Adapter version.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Include your API token as: Authorization: Token <your-token>'

@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Sandbox Banking Glyue Integration Gateway Adapters Service Requests API
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  version: 1.0.0
+  contact:
+    name: Sandbox Banking Support
+    url: https://glyue.docs.sandboxbanking.com/
+  license:
+    name: Proprietary
+servers:
+- url: https://{tenant}.sandboxbanking.com/api
+  description: Glyue tenant API endpoint
+  variables:
+    tenant:
+      default: your-institution
+      description: Your institution's Glyue tenant subdomain
+security:
+- TokenAuth: []
+tags:
+- name: Service Requests
+  description: Service request adapter operations.
+paths:
+  /integrations/{integrationId}/service-requests:
+    get:
+      operationId: listServiceRequests
+      summary: List Service Requests
+      description: Returns all service request adapters configured for an integration, in execution order.
+      tags:
+      - Service Requests
+      parameters:
+      - $ref: '#/components/parameters/IntegrationIdParam'
+      responses:
+        '200':
+          description: List of service requests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ServiceRequest'
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Integration not found.
+    post:
+      operationId: createServiceRequest
+      summary: Create Service Request
+      description: Adds a new service request adapter to an integration workflow.
+      tags:
+      - Service Requests
+      parameters:
+      - $ref: '#/components/parameters/IntegrationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServiceRequestRequest'
+      responses:
+        '201':
+          description: Service request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceRequest'
+        '400':
+          description: Validation error.
+        '401':
+          description: Unauthorized.
+components:
+  parameters:
+    IntegrationIdParam:
+      name: integrationId
+      in: path
+      required: true
+      description: Unique integration identifier.
+      schema:
+        type: string
+  schemas:
+    ServiceRequest:
+      type: object
+      description: A service request adapter step within an integration.
+      properties:
+        id:
+          type: string
+          description: Service request identifier.
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
+        operation:
+          type: string
+          description: Operation name (e.g., createLoan, getAccount, postTransaction).
+        sequence:
+          type: integer
+          description: Execution order within the integration.
+        callForEach:
+          type: boolean
+          description: Whether this iterates over a list of inputs.
+        enabled:
+          type: boolean
+          description: Whether this service request is active.
+    CreateServiceRequestRequest:
+      type: object
+      required:
+      - name
+      - adapter
+      - operation
+      properties:
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter identifier.
+        operation:
+          type: string
+          description: Operation name.
+        sequence:
+          type: integer
+          description: Execution order.
+        callForEach:
+          type: boolean
+          description: Whether to iterate over a list.
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Include your API token as: Authorization: Token <your-token>'

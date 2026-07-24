@@ -1,0 +1,135 @@
+openapi: 3.0.3
+info:
+  title: Sandbox Banking Glyue Integration Gateway Adapters Value Mappings API
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  version: 1.0.0
+  contact:
+    name: Sandbox Banking Support
+    url: https://glyue.docs.sandboxbanking.com/
+  license:
+    name: Proprietary
+servers:
+- url: https://{tenant}.sandboxbanking.com/api
+  description: Glyue tenant API endpoint
+  variables:
+    tenant:
+      default: your-institution
+      description: Your institution's Glyue tenant subdomain
+security:
+- TokenAuth: []
+tags:
+- name: Value Mappings
+  description: Value mapping table management.
+paths:
+  /value-mappings:
+    get:
+      operationId: listValueMappings
+      summary: List Value Mappings
+      description: Returns all value mapping tables configured in the platform for translating enumerated values between source and target systems.
+      tags:
+      - Value Mappings
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: Page number.
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        required: false
+        description: Results per page.
+        schema:
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: List of value mappings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ValueMapping'
+        '401':
+          description: Unauthorized.
+    post:
+      operationId: createValueMapping
+      summary: Create Value Mapping
+      description: Creates a new value mapping table for translating enumerated field values.
+      tags:
+      - Value Mappings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateValueMappingRequest'
+      responses:
+        '201':
+          description: Value mapping created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValueMapping'
+        '400':
+          description: Validation error.
+        '401':
+          description: Unauthorized.
+components:
+  schemas:
+    ValueMapping:
+      type: object
+      description: A value mapping table for translating enumerated values between systems.
+      properties:
+        id:
+          type: string
+          description: Value mapping table identifier.
+        name:
+          type: string
+          description: Table name.
+        description:
+          type: string
+          description: What this mapping table is used for.
+        entries:
+          type: array
+          description: Source-to-target value translation entries.
+          items:
+            type: object
+            properties:
+              sourceValue:
+                type: string
+                description: Source system value.
+              targetValue:
+                type: string
+                description: Target system value.
+    CreateValueMappingRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceValue:
+                type: string
+              targetValue:
+                type: string
+  securitySchemes:
+    TokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Token-based authentication. Include your API token as: Authorization: Token <your-token>'
