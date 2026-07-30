@@ -1,4 +1,18 @@
 aid: sandbox-banking
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sandbox-banking.png
 name: Sandbox Banking
 description: >-
   Sandbox Banking (now nCino Integration Gateway) is an Integration Platform as a Service (iPaaS) purpose-built for
@@ -22,46 +36,105 @@ created: '2024-12-25'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: sandbox-banking:glyue
-    name: Glyue Integration Gateway API
-    description: >-
-      The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking integration platform for
-      building, managing, and monitoring banking integrations. The API supports creating and executing integration
-      workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and
-      accessing run history audit logs.
-    humanURL: https://glyue.docs.sandboxbanking.com/
-    baseURL: https://{tenant}.sandboxbanking.com/api
-    tags:
-      - Audit
-      - Banking Integration
-      - Core Banking
-      - Field Mapping
-      - Glyue
-      - Integration
-      - iPaaS
-      - Workflow
-    properties:
-      - type: Documentation
-        url: https://glyue.docs.sandboxbanking.com/
-      - type: Documentation
-        url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
-      - type: OpenAPI
-        url: openapi/sandbox-banking-glyue-openapi.yml
-  - aid: sandbox-banking:mockbank
-    name: Mock Bank API
-    description: >-
-      The Mock Bank API provides a sandbox environment for testing and developing banking integrations without
-      connecting to production core banking systems. It simulates standard banking operations including account
-      management, transactions, and customer data in a controlled test environment.
-    humanURL: https://mockbank.docs.sandboxbanking.com/
-    tags:
-      - Banking
-      - Mock API
-      - Sandbox
-      - Testing
-    properties:
-      - type: Documentation
-        url: https://mockbank.docs.sandboxbanking.com/reference/introduction
+- aid: sandbox-banking:mockbank
+  name: Mock Bank API
+  description: >-
+    The Mock Bank API provides a sandbox environment for testing and developing banking integrations without
+    connecting to production core banking systems. It simulates standard banking operations including
+    account management, transactions, and customer data in a controlled test environment.
+  humanURL: https://mockbank.docs.sandboxbanking.com/
+  tags:
+  - Banking
+  - Mock API
+  - Sandbox
+  - Testing
+  properties:
+  - type: Documentation
+    url: https://mockbank.docs.sandboxbanking.com/reference/introduction
+- aid: sandbox-banking:sandbox-banking-adapters-api
+  name: Sandbox Banking Adapters API
+  description: Core banking and fintech adapter management.
+  humanURL: https://glyue.docs.sandboxbanking.com/
+  baseURL: https://{tenant}.sandboxbanking.com/api
+  tags:
+  - Adapters
+  properties:
+  - type: OpenAPI
+    url: openapi/sandbox-banking-adapters-api-openapi.yml
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
+- aid: sandbox-banking:sandbox-banking-field-mappings-api
+  name: Sandbox Banking Field Mappings API
+  description: Field mapping configuration.
+  humanURL: https://glyue.docs.sandboxbanking.com/
+  baseURL: https://{tenant}.sandboxbanking.com/api
+  tags:
+  - Field Mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/sandbox-banking-field-mappings-api-openapi.yml
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
+- aid: sandbox-banking:sandbox-banking-integrations-api
+  name: Sandbox Banking Integrations API
+  description: Integration workflow management.
+  humanURL: https://glyue.docs.sandboxbanking.com/
+  baseURL: https://{tenant}.sandboxbanking.com/api
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/sandbox-banking-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
+- aid: sandbox-banking:sandbox-banking-run-history-api
+  name: Sandbox Banking Run History API
+  description: Integration run audit log access.
+  humanURL: https://glyue.docs.sandboxbanking.com/
+  baseURL: https://{tenant}.sandboxbanking.com/api
+  tags:
+  - Run History
+  properties:
+  - type: OpenAPI
+    url: openapi/sandbox-banking-run-history-api-openapi.yml
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
+- aid: sandbox-banking:sandbox-banking-service-requests-api
+  name: Sandbox Banking Service Requests API
+  description: Service request adapter operations.
+  humanURL: https://glyue.docs.sandboxbanking.com/
+  baseURL: https://{tenant}.sandboxbanking.com/api
+  tags:
+  - Service Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/sandbox-banking-service-requests-api-openapi.yml
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
+- aid: sandbox-banking:sandbox-banking-value-mappings-api
+  name: Sandbox Banking Value Mappings API
+  description: Value mapping table management.
+  humanURL: https://glyue.docs.sandboxbanking.com/
+  baseURL: https://{tenant}.sandboxbanking.com/api
+  tags:
+  - Value Mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/sandbox-banking-value-mappings-api-openapi.yml
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/
+  - type: Documentation
+    url: https://glyue.docs.sandboxbanking.com/reference/integration_anatomy
 common:
   - type: AgenticAccess
     url: agentic-access/sandbox-banking-agentic-access.yml
