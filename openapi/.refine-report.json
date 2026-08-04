@@ -1,0 +1,24 @@
+{
+  "provider": "sandbox-banking",
+  "sources": [
+    "sandbox-banking-adapters-api-openapi.yml",
+    "sandbox-banking-field-mappings-api-openapi.yml",
+    "sandbox-banking-integrations-api-openapi.yml",
+    "sandbox-banking-run-history-api-openapi.yml",
+    "sandbox-banking-service-requests-api-openapi.yml",
+    "sandbox-banking-value-mappings-api-openapi.yml"
+  ],
+  "outputs": [
+    "sandbox-banking-adapters-api-openapi.yml",
+    "sandbox-banking-field-mappings-api-openapi.yml",
+    "sandbox-banking-integrations-api-openapi.yml",
+    "sandbox-banking-run-history-api-openapi.yml",
+    "sandbox-banking-service-requests-api-openapi.yml",
+    "sandbox-banking-value-mappings-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
