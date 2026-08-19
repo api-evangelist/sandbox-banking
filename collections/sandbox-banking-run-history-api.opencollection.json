@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sandbox Banking Glyue Integration Gateway Adapters Run History API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Run History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Run History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/run-history",
+            "params": [
+              {
+                "name": "integration_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by integration ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by run status."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter runs on or after this date (ISO 8601)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter runs on or before this date (ISO 8601)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Results per page."
+              }
+            ]
+          },
+          "docs": "Returns the run history audit log for integration executions, with request/response bodies, timestamps, statuses, and error details."
+        },
+        {
+          "info": {
+            "name": "Get Run History Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/run-history/:runId",
+            "params": [
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path",
+                "description": "Run identifier."
+              }
+            ]
+          },
+          "docs": "Returns the full audit detail for a specific integration run including request body, response body, and service request execution log."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

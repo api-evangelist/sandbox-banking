@@ -1,0 +1,499 @@
+{
+  "item": [
+    {
+      "id": "6385ec3b-6690-4a8a-a6d9-c957b0bd30ca",
+      "name": "Run History",
+      "description": {
+        "content": "Integration run audit log access.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b2372a66-02d8-46c5-8438-49ff495fe211",
+          "name": "List Run History",
+          "request": {
+            "name": "List Run History",
+            "description": {
+              "content": "Returns the run history audit log for integration executions, with request/response bodies, timestamps, statuses, and error details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "run-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "integration_id",
+                  "value": "<string>",
+                  "description": "Filter by integration ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by run status."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<dateTime>",
+                  "description": "Filter runs on or after this date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<dateTime>",
+                  "description": "Filter runs on or before this date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Results per page."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your institution's Glyue tenant subdomain",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f23a49f7-07c7-416b-9f11-455d01748e16",
+              "name": "Run history entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "run-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "integration_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your institution's Glyue tenant subdomain",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8468,\n  \"next\": \"http://IpqGXzFOdOBjOG.yxagVr-p-9fmBTSXsb3540ggJWGY9e0aQI8OeVD\",\n  \"previous\": \"https://WBYevhlSTgqAIyCw.egkbRaLy21GD.C7BOyH,9cy5k4ue\",\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"integrationId\": \"string\",\n      \"integrationName\": \"string\",\n      \"status\": \"running\",\n      \"startTime\": \"1948-10-11T03:37:56.040Z\",\n      \"endTime\": \"1972-07-06T05:34:51.230Z\",\n      \"durationMs\": 8521,\n      \"triggeredBy\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"integrationId\": \"string\",\n      \"integrationName\": \"string\",\n      \"status\": \"pending\",\n      \"startTime\": \"1960-07-04T11:42:47.581Z\",\n      \"endTime\": \"1950-11-24T21:15:11.948Z\",\n      \"durationMs\": 6865,\n      \"triggeredBy\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bafe075b-69e3-4f17-9d40-f09910a1ed94",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "run-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "integration_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your institution's Glyue tenant subdomain",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2963b7dd-c0a4-447a-b690-4a4d1358e9e8",
+          "name": "Get Run History Entry",
+          "request": {
+            "name": "Get Run History Entry",
+            "description": {
+              "content": "Returns the full audit detail for a specific integration run including request body, response body, and service request execution log.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "run-history",
+                ":runId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "runId",
+                  "description": "(Required) Run identifier."
+                },
+                {
+                  "description": "Your institution's Glyue tenant subdomain",
+                  "type": "any",
+                  "value": "{{tenant}}",
+                  "key": "tenant"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8dacce2b-b23e-42f8-bff4-193fc000981b",
+              "name": "Run history detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "run-history",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) Run identifier."
+                    },
+                    {
+                      "description": "Your institution's Glyue tenant subdomain",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestBody\": {\n    \"key_0\": \"string\"\n  },\n  \"responseBody\": {\n    \"key_0\": false,\n    \"key_1\": 4259\n  },\n  \"serviceRequestLog\": [\n    {\n      \"serviceRequestName\": \"string\",\n      \"adapter\": \"string\",\n      \"operation\": \"string\",\n      \"status\": \"string\",\n      \"requestSent\": {\n        \"key_0\": \"string\",\n        \"key_1\": false,\n        \"key_2\": \"string\"\n      },\n      \"responseReceived\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"durationMs\": 5594\n    },\n    {\n      \"serviceRequestName\": \"string\",\n      \"adapter\": \"string\",\n      \"operation\": \"string\",\n      \"status\": \"string\",\n      \"requestSent\": {\n        \"key_0\": false,\n        \"key_1\": false,\n        \"key_2\": true\n      },\n      \"responseReceived\": {\n        \"key_0\": \"string\"\n      },\n      \"durationMs\": 9505\n    }\n  ],\n  \"errorDetails\": \"string\",\n  \"id\": \"string\",\n  \"integrationId\": \"string\",\n  \"integrationName\": \"string\",\n  \"status\": \"success\",\n  \"startTime\": \"2014-07-11T23:39:10.291Z\",\n  \"endTime\": \"2024-10-09T08:32:13.355Z\",\n  \"durationMs\": 8928,\n  \"triggeredBy\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97ee9884-9585-4d9d-b364-c478ccbec346",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "run-history",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) Run identifier."
+                    },
+                    {
+                      "description": "Your institution's Glyue tenant subdomain",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6aab5598-ca31-426a-b230-bab2f691df9c",
+              "name": "Run not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "run-history",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "runId",
+                      "description": "(Required) Run identifier."
+                    },
+                    {
+                      "description": "Your institution's Glyue tenant subdomain",
+                      "type": "any",
+                      "value": "{{tenant}}",
+                      "key": "tenant"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your institution's Glyue tenant subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-institution",
+      "key": "tenant"
+    },
+    {
+      "type": "string",
+      "value": "https://{{tenant}}.sandboxbanking.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ab50312d-7337-4324-bc94-16e055dd441e",
+    "name": "Sandbox Banking Glyue Integration Gateway Adapters Run History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.\n\nContact Support:\n Name: Sandbox Banking Support",
+      "type": "text/plain"
+    }
+  }
+}

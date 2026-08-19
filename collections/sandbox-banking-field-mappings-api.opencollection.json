@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sandbox Banking Glyue Integration Gateway Adapters Field Mappings API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Field Mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Field Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/field-mappings",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ]
+          },
+          "docs": "Returns all field mapping definitions for a specific integration, showing source-to-target data transformation rules."
+        },
+        {
+          "info": {
+            "name": "Create Field Mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{tenant}.sandboxbanking.com/api/integrations/:integrationId/field-mappings",
+            "params": [
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique integration identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new field mapping rule for source-to-target data transformation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
