@@ -27,6 +27,16 @@ tags:
   - Banking
   - Core Banking
   - Credit Unions
+  - Financial-Services
+  - Fintech
+  - Integration Platform
+  - iPaaS
+  - Open Banking
+tags_raw:
+  - API Integration
+  - Banking
+  - Core Banking
+  - Credit Unions
   - Financial Services
   - Fintech
   - Integration Platform
@@ -85,6 +95,8 @@ apis:
   humanURL: https://glyue.docs.sandboxbanking.com/
   baseURL: https://{tenant}.sandboxbanking.com/api
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
