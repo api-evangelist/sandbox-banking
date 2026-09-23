@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sandbox Banking Glyue Integration Gateway Adapters Field Mappings API
-  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  title: Sandbox Banking Glyue Integration Gateway Field Mappings API
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations.
   version: 1.0.0
   contact:
     name: Sandbox Banking Support
@@ -72,15 +72,27 @@ paths:
         '401':
           description: Unauthorized.
 components:
-  parameters:
-    IntegrationIdParam:
-      name: integrationId
-      in: path
-      required: true
-      description: Unique integration identifier.
-      schema:
-        type: string
   schemas:
+    CreateFieldMappingRequest:
+      type: object
+      required:
+      - sourceField
+      - targetField
+      properties:
+        sourceField:
+          type: string
+          description: Source field path.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional transformation formula.
+        valueMapping:
+          type: string
+          description: Value mapping table reference.
+        required:
+          type: boolean
     FieldMapping:
       type: object
       description: A field mapping rule transforming source data to target format.
@@ -103,26 +115,14 @@ components:
         required:
           type: boolean
           description: Whether this mapping is required.
-    CreateFieldMappingRequest:
-      type: object
-      required:
-      - sourceField
-      - targetField
-      properties:
-        sourceField:
-          type: string
-          description: Source field path.
-        targetField:
-          type: string
-          description: Target field path.
-        transform:
-          type: string
-          description: Optional transformation formula.
-        valueMapping:
-          type: string
-          description: Value mapping table reference.
-        required:
-          type: boolean
+  parameters:
+    IntegrationIdParam:
+      name: integrationId
+      in: path
+      required: true
+      description: Unique integration identifier.
+      schema:
+        type: string
   securitySchemes:
     TokenAuth:
       type: apiKey

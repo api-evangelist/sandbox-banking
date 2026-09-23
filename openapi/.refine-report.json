@@ -1,12 +1,7 @@
 {
   "provider": "sandbox-banking",
   "sources": [
-    "sandbox-banking-adapters-api-openapi.yml",
-    "sandbox-banking-field-mappings-api-openapi.yml",
-    "sandbox-banking-integrations-api-openapi.yml",
-    "sandbox-banking-run-history-api-openapi.yml",
-    "sandbox-banking-service-requests-api-openapi.yml",
-    "sandbox-banking-value-mappings-api-openapi.yml"
+    "_original/sandbox-banking-glyue-openapi.yml"
   ],
   "outputs": [
     "sandbox-banking-adapters-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sandbox-banking-glyue-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sandbox-banking-adapters-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sandbox-banking-field-mappings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sandbox-banking-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sandbox-banking-run-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sandbox-banking-service-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sandbox-banking-value-mappings-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sandbox Banking Glyue Integration Gateway Adapters Run History API
-  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  title: Sandbox Banking Glyue Integration Gateway Run History API
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations.
   version: 1.0.0
   contact:
     name: Sandbox Banking Support
@@ -124,6 +124,38 @@ paths:
           description: Run not found.
 components:
   schemas:
+    RunHistoryEntry:
+      type: object
+      description: Summary of a past integration run.
+      properties:
+        id:
+          type: string
+          description: Run history entry ID.
+        integrationId:
+          type: string
+          description: Integration identifier.
+        integrationName:
+          type: string
+          description: Integration display name.
+        status:
+          type: string
+          enum:
+          - success
+          - failure
+          - running
+          - pending
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        durationMs:
+          type: integer
+          description: Run duration in milliseconds.
+        triggeredBy:
+          type: string
+          description: User or system that triggered the run.
     RunHistoryDetail:
       allOf:
       - $ref: '#/components/schemas/RunHistoryEntry'
@@ -161,38 +193,6 @@ components:
         errorDetails:
           type: string
           description: Full error traceback if run failed.
-    RunHistoryEntry:
-      type: object
-      description: Summary of a past integration run.
-      properties:
-        id:
-          type: string
-          description: Run history entry ID.
-        integrationId:
-          type: string
-          description: Integration identifier.
-        integrationName:
-          type: string
-          description: Integration display name.
-        status:
-          type: string
-          enum:
-          - success
-          - failure
-          - running
-          - pending
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        durationMs:
-          type: integer
-          description: Run duration in milliseconds.
-        triggeredBy:
-          type: string
-          description: User or system that triggered the run.
   securitySchemes:
     TokenAuth:
       type: apiKey

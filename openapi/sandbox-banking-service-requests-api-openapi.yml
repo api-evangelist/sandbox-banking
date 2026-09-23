@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Sandbox Banking Glyue Integration Gateway Adapters Service Requests API
-  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs. Designed for financial institutions connecting core banking systems (Fiserv, Jack Henry, FIS) with fintech applications and loan origination systems.
+  title: Sandbox Banking Glyue Integration Gateway Service Requests…
+  description: The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking (nCino Integration Gateway) platform for building, managing, and monitoring banking integrations.
   version: 1.0.0
   contact:
     name: Sandbox Banking Support
@@ -72,15 +72,29 @@ paths:
         '401':
           description: Unauthorized.
 components:
-  parameters:
-    IntegrationIdParam:
-      name: integrationId
-      in: path
-      required: true
-      description: Unique integration identifier.
-      schema:
-        type: string
   schemas:
+    CreateServiceRequestRequest:
+      type: object
+      required:
+      - name
+      - adapter
+      - operation
+      properties:
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter identifier.
+        operation:
+          type: string
+          description: Operation name.
+        sequence:
+          type: integer
+          description: Execution order.
+        callForEach:
+          type: boolean
+          description: Whether to iterate over a list.
     ServiceRequest:
       type: object
       description: A service request adapter step within an integration.
@@ -106,28 +120,14 @@ components:
         enabled:
           type: boolean
           description: Whether this service request is active.
-    CreateServiceRequestRequest:
-      type: object
-      required:
-      - name
-      - adapter
-      - operation
-      properties:
-        name:
-          type: string
-          description: Service request name.
-        adapter:
-          type: string
-          description: Adapter identifier.
-        operation:
-          type: string
-          description: Operation name.
-        sequence:
-          type: integer
-          description: Execution order.
-        callForEach:
-          type: boolean
-          description: Whether to iterate over a list.
+  parameters:
+    IntegrationIdParam:
+      name: integrationId
+      in: path
+      required: true
+      description: Unique integration identifier.
+      schema:
+        type: string
   securitySchemes:
     TokenAuth:
       type: apiKey
