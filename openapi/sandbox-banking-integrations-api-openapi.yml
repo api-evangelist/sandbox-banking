@@ -227,39 +227,82 @@ components:
           description: Validation rules.
           items:
             $ref: '#/components/schemas/ValidationRule'
-    CreateIntegrationRequest:
+    RunResult:
       type: object
-      required:
-      - name
-      - status
+      description: Result of an integration run execution.
       properties:
-        name:
+        runId:
           type: string
-          description: Integration name.
-        description:
-          type: string
-          description: Integration description.
+          description: Unique run identifier for status tracking.
         status:
           type: string
+          description: Run status.
           enum:
-          - active
-          - inactive
-          - draft
-          - testing
-        integrationType:
+          - success
+          - failure
+          - running
+          - pending
+        integrationId:
           type: string
-          enum:
-          - web_service_api
-          - batch_etl
-          - file_transfer
-          - event_pubsub
-          - webhook
-        sourceSystem:
+          description: Integration that was run.
+        startTime:
           type: string
-          description: Source system name.
-        targetSystem:
+          format: date-time
+          description: Run start timestamp.
+        endTime:
           type: string
-          description: Target system name.
+          format: date-time
+          description: Run completion timestamp.
+        responseBody:
+          type: object
+          description: Integration output payload.
+          additionalProperties: true
+        errorMessage:
+          type: string
+          description: Error message if run failed.
+    ValidationRule:
+      type: object
+      description: A validation rule that must pass before integration proceeds.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Rule name.
+        condition:
+          type: string
+          description: Boolean expression that must be true.
+        errorMessage:
+          type: string
+          description: Error message returned if validation fails.
+        sequence:
+          type: integer
+          description: Validation order.
+    ServiceRequest:
+      type: object
+      description: A service request adapter step within an integration.
+      properties:
+        id:
+          type: string
+          description: Service request identifier.
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
+        operation:
+          type: string
+          description: Operation name (e.g., createLoan, getAccount, postTransaction).
+        sequence:
+          type: integer
+          description: Execution order within the integration.
+        callForEach:
+          type: boolean
+          description: Whether this iterates over a list of inputs.
+        enabled:
+          type: boolean
+          description: Whether this service request is active.
     Integration:
       type: object
       description: A Glyue integration workflow.
@@ -308,6 +351,39 @@ components:
           type: string
           format: date-time
           description: Last modification timestamp.
+    CreateIntegrationRequest:
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+          description: Integration name.
+        description:
+          type: string
+          description: Integration description.
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - draft
+          - testing
+        integrationType:
+          type: string
+          enum:
+          - web_service_api
+          - batch_etl
+          - file_transfer
+          - event_pubsub
+          - webhook
+        sourceSystem:
+          type: string
+          description: Source system name.
+        targetSystem:
+          type: string
+          description: Target system name.
     FieldMapping:
       type: object
       description: A field mapping rule transforming source data to target format.
@@ -330,82 +406,6 @@ components:
         required:
           type: boolean
           description: Whether this mapping is required.
-    ServiceRequest:
-      type: object
-      description: A service request adapter step within an integration.
-      properties:
-        id:
-          type: string
-          description: Service request identifier.
-        name:
-          type: string
-          description: Service request name.
-        adapter:
-          type: string
-          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
-        operation:
-          type: string
-          description: Operation name (e.g., createLoan, getAccount, postTransaction).
-        sequence:
-          type: integer
-          description: Execution order within the integration.
-        callForEach:
-          type: boolean
-          description: Whether this iterates over a list of inputs.
-        enabled:
-          type: boolean
-          description: Whether this service request is active.
-    ValidationRule:
-      type: object
-      description: A validation rule that must pass before integration proceeds.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          description: Rule name.
-        condition:
-          type: string
-          description: Boolean expression that must be true.
-        errorMessage:
-          type: string
-          description: Error message returned if validation fails.
-        sequence:
-          type: integer
-          description: Validation order.
-    RunResult:
-      type: object
-      description: Result of an integration run execution.
-      properties:
-        runId:
-          type: string
-          description: Unique run identifier for status tracking.
-        status:
-          type: string
-          description: Run status.
-          enum:
-          - success
-          - failure
-          - running
-          - pending
-        integrationId:
-          type: string
-          description: Integration that was run.
-        startTime:
-          type: string
-          format: date-time
-          description: Run start timestamp.
-        endTime:
-          type: string
-          format: date-time
-          description: Run completion timestamp.
-        responseBody:
-          type: object
-          description: Integration output payload.
-          additionalProperties: true
-        errorMessage:
-          type: string
-          description: Error message if run failed.
   parameters:
     IntegrationIdParam:
       name: integrationId

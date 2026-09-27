@@ -40,7 +40,7 @@ tags:
   - Banking
   - Core Banking
   - Credit Union
-  - Financial-Services
+  - Financial Services
   - Fintech
   - Integration Platform
   - iPaaS
@@ -55,6 +55,7 @@ tags_raw:
   - Integration Platform
   - iPaaS
   - Open Banking
+  - Financial-Services
 created: '2024-12-25'
 modified: '2026-05-19'
 specificationVersion: '0.23'
