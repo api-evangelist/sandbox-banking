@@ -84,24 +84,6 @@ paths:
           description: Unauthorized.
 components:
   schemas:
-    CreateValueMappingRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        entries:
-          type: array
-          items:
-            type: object
-            properties:
-              sourceValue:
-                type: string
-              targetValue:
-                type: string
     ValueMapping:
       type: object
       description: A value mapping table for translating enumerated values between systems.
@@ -127,6 +109,24 @@ components:
               targetValue:
                 type: string
                 description: Target system value.
+    CreateValueMappingRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              sourceValue:
+                type: string
+              targetValue:
+                type: string
   securitySchemes:
     TokenAuth:
       type: apiKey

@@ -72,35 +72,7 @@ paths:
         '401':
           description: Unauthorized.
 components:
-  parameters:
-    IntegrationIdParam:
-      name: integrationId
-      in: path
-      required: true
-      description: Unique integration identifier.
-      schema:
-        type: string
   schemas:
-    CreateFieldMappingRequest:
-      type: object
-      required:
-      - sourceField
-      - targetField
-      properties:
-        sourceField:
-          type: string
-          description: Source field path.
-        targetField:
-          type: string
-          description: Target field path.
-        transform:
-          type: string
-          description: Optional transformation formula.
-        valueMapping:
-          type: string
-          description: Value mapping table reference.
-        required:
-          type: boolean
     FieldMapping:
       type: object
       description: A field mapping rule transforming source data to target format.
@@ -123,6 +95,34 @@ components:
         required:
           type: boolean
           description: Whether this mapping is required.
+    CreateFieldMappingRequest:
+      type: object
+      required:
+      - sourceField
+      - targetField
+      properties:
+        sourceField:
+          type: string
+          description: Source field path.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional transformation formula.
+        valueMapping:
+          type: string
+          description: Value mapping table reference.
+        required:
+          type: boolean
+  parameters:
+    IntegrationIdParam:
+      name: integrationId
+      in: path
+      required: true
+      description: Unique integration identifier.
+      schema:
+        type: string
   securitySchemes:
     TokenAuth:
       type: apiKey

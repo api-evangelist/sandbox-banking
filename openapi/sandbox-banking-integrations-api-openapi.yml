@@ -208,6 +208,120 @@ paths:
           description: Integration not found.
 components:
   schemas:
+    Integration:
+      type: object
+      description: A Glyue integration workflow.
+      properties:
+        id:
+          type: string
+          description: Unique integration identifier.
+        name:
+          type: string
+          description: Integration name (e.g., Loan Booking to Fiserv Signature).
+        description:
+          type: string
+          description: What this integration does and which systems it connects.
+        status:
+          type: string
+          description: Current integration status.
+          enum:
+          - active
+          - inactive
+          - draft
+          - testing
+          - deprecated
+        integrationType:
+          type: string
+          description: Integration pattern type.
+          enum:
+          - web_service_api
+          - batch_etl
+          - file_transfer
+          - event_pubsub
+          - webhook
+        sourceSystem:
+          type: string
+          description: Source system name.
+        targetSystem:
+          type: string
+          description: Target system name.
+        serviceRequestCount:
+          type: integer
+          description: Number of service requests in this integration.
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last modification timestamp.
+    IntegrationDetail:
+      allOf:
+      - $ref: '#/components/schemas/Integration'
+      properties:
+        serviceRequests:
+          type: array
+          description: Service request adapters in execution order.
+          items:
+            $ref: '#/components/schemas/ServiceRequest'
+        fieldMappings:
+          type: array
+          description: Field mapping rules.
+          items:
+            $ref: '#/components/schemas/FieldMapping'
+        validationRules:
+          type: array
+          description: Validation rules.
+          items:
+            $ref: '#/components/schemas/ValidationRule'
+    ServiceRequest:
+      type: object
+      description: A service request adapter step within an integration.
+      properties:
+        id:
+          type: string
+          description: Service request identifier.
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
+        operation:
+          type: string
+          description: Operation name (e.g., createLoan, getAccount, postTransaction).
+        sequence:
+          type: integer
+          description: Execution order within the integration.
+        callForEach:
+          type: boolean
+          description: Whether this iterates over a list of inputs.
+        enabled:
+          type: boolean
+          description: Whether this service request is active.
+    FieldMapping:
+      type: object
+      description: A field mapping rule transforming source data to target format.
+      properties:
+        id:
+          type: string
+          description: Field mapping identifier.
+        sourceField:
+          type: string
+          description: Source field path or expression.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional Python transformation formula or expression.
+        valueMapping:
+          type: string
+          description: Reference to a value mapping table for enum translation.
+        required:
+          type: boolean
+          description: Whether this mapping is required.
     RunResult:
       type: object
       description: Result of an integration run execution.
@@ -274,31 +388,6 @@ components:
         targetSystem:
           type: string
           description: Target system name.
-    ServiceRequest:
-      type: object
-      description: A service request adapter step within an integration.
-      properties:
-        id:
-          type: string
-          description: Service request identifier.
-        name:
-          type: string
-          description: Service request name.
-        adapter:
-          type: string
-          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
-        operation:
-          type: string
-          description: Operation name (e.g., createLoan, getAccount, postTransaction).
-        sequence:
-          type: integer
-          description: Execution order within the integration.
-        callForEach:
-          type: boolean
-          description: Whether this iterates over a list of inputs.
-        enabled:
-          type: boolean
-          description: Whether this service request is active.
     ValidationRule:
       type: object
       description: A validation rule that must pass before integration proceeds.
@@ -317,95 +406,6 @@ components:
         sequence:
           type: integer
           description: Validation order.
-    IntegrationDetail:
-      allOf:
-      - $ref: '#/components/schemas/Integration'
-      properties:
-        serviceRequests:
-          type: array
-          description: Service request adapters in execution order.
-          items:
-            $ref: '#/components/schemas/ServiceRequest'
-        fieldMappings:
-          type: array
-          description: Field mapping rules.
-          items:
-            $ref: '#/components/schemas/FieldMapping'
-        validationRules:
-          type: array
-          description: Validation rules.
-          items:
-            $ref: '#/components/schemas/ValidationRule'
-    Integration:
-      type: object
-      description: A Glyue integration workflow.
-      properties:
-        id:
-          type: string
-          description: Unique integration identifier.
-        name:
-          type: string
-          description: Integration name (e.g., Loan Booking to Fiserv Signature).
-        description:
-          type: string
-          description: What this integration does and which systems it connects.
-        status:
-          type: string
-          description: Current integration status.
-          enum:
-          - active
-          - inactive
-          - draft
-          - testing
-          - deprecated
-        integrationType:
-          type: string
-          description: Integration pattern type.
-          enum:
-          - web_service_api
-          - batch_etl
-          - file_transfer
-          - event_pubsub
-          - webhook
-        sourceSystem:
-          type: string
-          description: Source system name.
-        targetSystem:
-          type: string
-          description: Target system name.
-        serviceRequestCount:
-          type: integer
-          description: Number of service requests in this integration.
-        createdAt:
-          type: string
-          format: date-time
-          description: Creation timestamp.
-        updatedAt:
-          type: string
-          format: date-time
-          description: Last modification timestamp.
-    FieldMapping:
-      type: object
-      description: A field mapping rule transforming source data to target format.
-      properties:
-        id:
-          type: string
-          description: Field mapping identifier.
-        sourceField:
-          type: string
-          description: Source field path or expression.
-        targetField:
-          type: string
-          description: Target field path.
-        transform:
-          type: string
-          description: Optional Python transformation formula or expression.
-        valueMapping:
-          type: string
-          description: Reference to a value mapping table for enum translation.
-        required:
-          type: boolean
-          description: Whether this mapping is required.
   parameters:
     IntegrationIdParam:
       name: integrationId
