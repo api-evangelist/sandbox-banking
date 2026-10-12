@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/sandbox-banking/integrations
+- https://n8n.io/integrations/sandbox-banking/
+- https://composio.dev/toolkits/sandbox-banking
+- https://monid.ai/tools/sandbox-banking
+checked:
+- https://composio.dev/toolkits/sandbox-banking
+- https://monid.ai/tools/sandbox-banking
+- https://n8n.io/integrations/sandbox-banking/
+- https://zapier.com/apps/sandbox-banking/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
