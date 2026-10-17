@@ -208,6 +208,123 @@ paths:
           description: Integration not found.
 components:
   schemas:
+    ValidationRule:
+      type: object
+      description: A validation rule that must pass before integration proceeds.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Rule name.
+        condition:
+          type: string
+          description: Boolean expression that must be true.
+        errorMessage:
+          type: string
+          description: Error message returned if validation fails.
+        sequence:
+          type: integer
+          description: Validation order.
+    IntegrationDetail:
+      allOf:
+      - $ref: '#/components/schemas/Integration'
+      properties:
+        serviceRequests:
+          type: array
+          description: Service request adapters in execution order.
+          items:
+            $ref: '#/components/schemas/ServiceRequest'
+        fieldMappings:
+          type: array
+          description: Field mapping rules.
+          items:
+            $ref: '#/components/schemas/FieldMapping'
+        validationRules:
+          type: array
+          description: Validation rules.
+          items:
+            $ref: '#/components/schemas/ValidationRule'
+    ServiceRequest:
+      type: object
+      description: A service request adapter step within an integration.
+      properties:
+        id:
+          type: string
+          description: Service request identifier.
+        name:
+          type: string
+          description: Service request name.
+        adapter:
+          type: string
+          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
+        operation:
+          type: string
+          description: Operation name (e.g., createLoan, getAccount, postTransaction).
+        sequence:
+          type: integer
+          description: Execution order within the integration.
+        callForEach:
+          type: boolean
+          description: Whether this iterates over a list of inputs.
+        enabled:
+          type: boolean
+          description: Whether this service request is active.
+    CreateIntegrationRequest:
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+          description: Integration name.
+        description:
+          type: string
+          description: Integration description.
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - draft
+          - testing
+        integrationType:
+          type: string
+          enum:
+          - web_service_api
+          - batch_etl
+          - file_transfer
+          - event_pubsub
+          - webhook
+        sourceSystem:
+          type: string
+          description: Source system name.
+        targetSystem:
+          type: string
+          description: Target system name.
+    FieldMapping:
+      type: object
+      description: A field mapping rule transforming source data to target format.
+      properties:
+        id:
+          type: string
+          description: Field mapping identifier.
+        sourceField:
+          type: string
+          description: Source field path or expression.
+        targetField:
+          type: string
+          description: Target field path.
+        transform:
+          type: string
+          description: Optional Python transformation formula or expression.
+        valueMapping:
+          type: string
+          description: Reference to a value mapping table for enum translation.
+        required:
+          type: boolean
+          description: Whether this mapping is required.
     Integration:
       type: object
       description: A Glyue integration workflow.
@@ -256,72 +373,6 @@ components:
           type: string
           format: date-time
           description: Last modification timestamp.
-    IntegrationDetail:
-      allOf:
-      - $ref: '#/components/schemas/Integration'
-      properties:
-        serviceRequests:
-          type: array
-          description: Service request adapters in execution order.
-          items:
-            $ref: '#/components/schemas/ServiceRequest'
-        fieldMappings:
-          type: array
-          description: Field mapping rules.
-          items:
-            $ref: '#/components/schemas/FieldMapping'
-        validationRules:
-          type: array
-          description: Validation rules.
-          items:
-            $ref: '#/components/schemas/ValidationRule'
-    ServiceRequest:
-      type: object
-      description: A service request adapter step within an integration.
-      properties:
-        id:
-          type: string
-          description: Service request identifier.
-        name:
-          type: string
-          description: Service request name.
-        adapter:
-          type: string
-          description: Adapter used (e.g., fiserv_signature, jack_henry_symitar).
-        operation:
-          type: string
-          description: Operation name (e.g., createLoan, getAccount, postTransaction).
-        sequence:
-          type: integer
-          description: Execution order within the integration.
-        callForEach:
-          type: boolean
-          description: Whether this iterates over a list of inputs.
-        enabled:
-          type: boolean
-          description: Whether this service request is active.
-    FieldMapping:
-      type: object
-      description: A field mapping rule transforming source data to target format.
-      properties:
-        id:
-          type: string
-          description: Field mapping identifier.
-        sourceField:
-          type: string
-          description: Source field path or expression.
-        targetField:
-          type: string
-          description: Target field path.
-        transform:
-          type: string
-          description: Optional Python transformation formula or expression.
-        valueMapping:
-          type: string
-          description: Reference to a value mapping table for enum translation.
-        required:
-          type: boolean
-          description: Whether this mapping is required.
     RunResult:
       type: object
       description: Result of an integration run execution.
@@ -355,57 +406,6 @@ components:
         errorMessage:
           type: string
           description: Error message if run failed.
-    CreateIntegrationRequest:
-      type: object
-      required:
-      - name
-      - status
-      properties:
-        name:
-          type: string
-          description: Integration name.
-        description:
-          type: string
-          description: Integration description.
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-          - draft
-          - testing
-        integrationType:
-          type: string
-          enum:
-          - web_service_api
-          - batch_etl
-          - file_transfer
-          - event_pubsub
-          - webhook
-        sourceSystem:
-          type: string
-          description: Source system name.
-        targetSystem:
-          type: string
-          description: Target system name.
-    ValidationRule:
-      type: object
-      description: A validation rule that must pass before integration proceeds.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          description: Rule name.
-        condition:
-          type: string
-          description: Boolean expression that must be true.
-        errorMessage:
-          type: string
-          description: Error message returned if validation fails.
-        sequence:
-          type: integer
-          description: Validation order.
   parameters:
     IntegrationIdParam:
       name: integrationId
