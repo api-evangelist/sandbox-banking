@@ -1,4 +1,4 @@
-# Sandbox Banking (sandbox-banking)
+# Sandbox Banking
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,89 +66,163 @@
 
 Sandbox Banking (now nCino Integration Gateway) is an Integration Platform as a Service (iPaaS) purpose-built for financial institutions. The platform enables banks and credit unions to connect core banking systems (Fiserv, Jack Henry, FIS, and 14+ other cores) with fintech applications, loan origination systems, CRMs, KYC/AML providers, and 50+ financial services solutions. Glyue, the core integration framework, provides low-code workflow automation with Python extensibility, audit trails, role-based access control, and regulatory compliance features aligned with CFPB Section 1033, GLBA, and FFIEC guidelines.
 
-**APIs.json:** [https://glyue.docs.sandboxbanking.com/](https://glyue.docs.sandboxbanking.com/)
+**Areas:** API Integration · Banking · Core Banking · Credit Union · Financial Services · Fintech · Integration Platform · iPaaS · Open Banking
 
-## Tags
+## Sandbox Banking on APIs.io
 
-- API Integration
-- Banking
-- Core Banking
-- Credit Unions
-- Financial Services
-- Fintech
-- Integration Platform
-- iPaaS
-- Open Banking
+Everything profiled for Sandbox Banking is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sandbox-banking/](https://apis.io/providers/sandbox-banking/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (7)
 
-- **Created:** 2024-12-25
-- **Modified:** 2026-05-19
+- [Mock Bank API](https://apis.io/apis/sandbox-banking/mockbank/) — The Mock Bank API provides a sandbox environment for testing and developing banking integrations without connecting to production core banking systems. It…
+- [Sandbox Banking Adapters API](https://apis.io/apis/sandbox-banking/sandbox-banking-adapters-api/) — Core banking and fintech adapter management.
+- [Sandbox Banking Field Mappings API](https://apis.io/apis/sandbox-banking/sandbox-banking-field-mappings-api/) — Field mapping configuration.
+- [Sandbox Banking Integrations API](https://apis.io/apis/sandbox-banking/sandbox-banking-integrations-api/) — Integration workflow management.
+- [Sandbox Banking Run History API](https://apis.io/apis/sandbox-banking/sandbox-banking-run-history-api/) — Integration run audit log access.
+- [Sandbox Banking Service Requests API](https://apis.io/apis/sandbox-banking/sandbox-banking-service-requests-api/) — Service request adapter operations.
+- [Sandbox Banking Value Mappings API](https://apis.io/apis/sandbox-banking/sandbox-banking-value-mappings-api/) — Value mapping table management.
 
-## APIs
+### Published properties
 
-### Glyue Integration Gateway API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The Glyue Integration Gateway API provides programmatic access to the Sandbox Banking integration platform for building, managing, and monitoring banking integrations. The API supports creating and executing integration workflows, managing service request adapters, configuring field mappings, value mappings, validation rules, and accessing run history audit logs.
+#### Agentic access (1)
 
-- **Human URL:** [https://glyue.docs.sandboxbanking.com/](https://glyue.docs.sandboxbanking.com/)
-- **Base URL:** `https://{tenant}.sandboxbanking.com/api`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Sandbox Banking Agentic Access](https://apis.io/agentic-access/sandbox-banking/sandbox-banking-agentic-access/)
 
-- Audit
-- Banking Integration
-- Core Banking
-- Field Mapping
-- Glyue
-- Integration
-- iPaaS
-- Workflow
+#### JSON Schema (1)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://glyue.docs.sandboxbanking.com/)
-- [Documentation](https://glyue.docs.sandboxbanking.com/reference/integration_anatomy)
-- [OpenAPI](openapi/sandbox-banking-glyue-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sandbox-banking-glyue.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sandbox-banking-glyue.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Sandbox Banking Integration](https://apis.io/schemas/sandbox-banking/sandbox-banking-integration/)
 
-### Mock Bank API
+#### JSON Structure (1)
 
-The Mock Bank API provides a sandbox environment for testing and developing banking integrations without connecting to production core banking systems. It simulates standard banking operations including account management, transactions, and customer data in a controlled test environment.
+Data models expressed in JSON Structure.
 
-- **Human URL:** [https://mockbank.docs.sandboxbanking.com/](https://mockbank.docs.sandboxbanking.com/)
+- [Sandbox Banking Integration Structure](https://apis.io/json-structure/sandbox-banking/sandbox-banking-integration-structure/)
 
-#### Tags
+#### JSON-LD (1)
 
-- Banking
-- Mock API
-- Sandbox
-- Testing
+Linked-data contexts for the provider's vocabulary.
 
-#### Properties
+- [Sandbox Banking Context](https://apis.io/jsonld/sandbox-banking/sandbox-banking-context/)
 
-- [Documentation](https://mockbank.docs.sandboxbanking.com/reference/introduction)
-- [Postman Collection](collections/sandbox-banking-glyue.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sandbox-banking-glyue.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Vocabulary (1)
 
-## Common Properties
+The provider's domain terms, defined.
 
-- [LinkedIn](https://www.linkedin.com/company/sandboxbanking)
-- [Documentation](https://glyue.docs.sandboxbanking.com/)
-- [Documentation](https://www.ncino.com/solutions/integrations)
-- [Documentation](https://mockbank.docs.sandboxbanking.com/)
+- [Sandbox Banking Vocabulary](https://apis.io/vocabularies/sandbox-banking/sandbox-banking-vocabulary/)
+
+#### Examples (2)
+
+Example requests and responses.
+
+- [Sandbox Banking List Integrations Example](https://apis.io/examples/sandbox-banking/sandbox-banking-list-integrations-example/)
+- [Sandbox Banking Run Integration Example](https://apis.io/examples/sandbox-banking/sandbox-banking-run-integration-example/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Sandbox Banking Glyue Integration Gateway Adapters API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-adapters-api/)
+- [Sandbox Banking Glyue Integration Gateway Adapters Field Mappings API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-field-mappings-api/)
+- [Sandbox Banking Glyue Integration Gateway API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-glyue/)
+- [Sandbox Banking Glyue Integration Gateway Adapters Integrations API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-integrations-api/)
+- [Sandbox Banking Glyue Integration Gateway Adapters Run History API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-run-history-api/)
+- [Sandbox Banking Glyue Integration Gateway Adapters Service Requests API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-service-requests-api/)
+- [Sandbox Banking Glyue Integration Gateway Adapters Value Mappings API](https://apis.io/collections/sandbox-banking/open-sandbox-banking-value-mappings-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Sandbox Banking — jsonschema rules](https://apis.io/rules/sandbox-banking/sandbox-banking-jsonschema-spectral-rules/)
+- [Sandbox Banking API Rules](https://apis.io/rules/sandbox-banking/sandbox-banking-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Sandbox Banking Authentication](https://apis.io/security/sandbox-banking/sandbox-banking-authentication/)
+- [Sandbox Banking Domain Security](https://apis.io/security/sandbox-banking/sandbox-banking-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Sandbox Banking Plans Pricing](https://apis.io/plans/sandbox-banking/sandbox-banking-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Sandbox Banking Rate Limits](https://apis.io/rate-limits/sandbox-banking/sandbox-banking-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Sandbox Banking Finops](https://apis.io/finops/sandbox-banking/sandbox-banking-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://sandboxbanking.com/)
-- [Spectral Rules](rules/sandbox-banking-rules.yml)
-- [JSON Schema](json-schema/sandbox-banking-integration-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/sandbox-banking-integration-structure.json)
-- [J S O N L D Context](json-ld/sandbox-banking-context.jsonld)
-- [Example](examples/sandbox-banking-list-integrations-example.json)
-- [Example](examples/sandbox-banking-run-integration-example.json)
-- [Vocabulary](vocabulary/sandbox-banking-vocabulary.yml)
-- [L L Ms Txt](https://glyue.docs.sandboxbanking.com/llms.txt)
+- [Documentation](https://glyue.docs.sandboxbanking.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 31.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 62.7 |
+| Contract governance | 27.3 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 7.9 |
+
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 13.4** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sandbox-banking/](https://apis.io/providers/sandbox-banking/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sandbox Banking: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sandbox-banking/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
